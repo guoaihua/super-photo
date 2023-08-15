@@ -1,0 +1,13 @@
+{
+  "miniprogramRoot": "./",
+  "projectname": "super-photo",
+  "description": "微信超级头像装饰器",
+  "appid": "touristappid",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram"
+}
