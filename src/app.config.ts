@@ -1,5 +1,9 @@
 export default {
-  pages: ["pages/index/index"],
+  pages: [
+    "pages/photo/index",
+    "pages/index/index",
+   
+  ],
   window: {
     backgroundTextStyle: "light",
     navigationBarBackgroundColor: "#fff",

@@ -1,0 +1,44 @@
+page, .wrapper {
+    background: #faf5e7;
+    width: 100%;
+    height: 100%;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    &>view {
+        height: 50%;
+    }
+
+    // 容器上层
+    .photo-top {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .photo-compose-container {
+            width: 300px;
+            height: 300px;
+            top: 154px;
+            left: 45px;
+            border-radius: 30px;
+            border: 1.5px;
+            // background-blend-mode: multiply; 
+        }
+    }
+
+    .photo-bottom {
+        .create-img,.avatar-wrapper {
+            background-color: #FFA112;
+            width: 280px;
+            height: 50px;
+            border-radius: 10px;
+            border: 1px;
+            gap: 10px;
+            margin-bottom: 10px;   
+        }
+    }
+}
