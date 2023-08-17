@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { View, Text, Button, Image } from "@tarojs/components";
 import Taro from '@tarojs/taro'
-import { useEnv, useNavigationBar, useModal, useToast } from "taro-hooks";
 
 import './index.scss'
 
@@ -17,7 +16,8 @@ const Index = () => {
           Taro.navigateTo({
             url: '/pages/photo/index'
           })
-        }}> 头像挂件</Button>
+        }}
+        > 头像挂件</Button>
     </View>
   );
 };
