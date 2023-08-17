@@ -13,17 +13,25 @@ import { useEnv, useNavigationBar, useModal, useToast } from "taro-hooks";
 import maskPng from "./cn_mask_1.png";
 import maskPng2 from "./mask_china-02.png";
 import "./index.scss";
+import CustomNavigator from "../../components/CustomNavigator";
+
 
 const Index = () => {
   const [userInfo, setUserInfo] = useState<{
     avatarUrl: string;
   }>();
+  const [preview, setPreview] = useState(false)
   console.log(userInfo);
+  
+
   return (
     <View className='wrapper'>
+         <CustomNavigator showBackBtn title="头像挂件"/>
       <View className='photo-top'>
         <View className='preview'>
-          <View>效果预览</View>
+          <View onClick={()=>{ 
+            setPreview(false)
+          }}>清除</View>
         </View>
         {/* <View className='photo-compose-container' style={{
             background: `url(${maskPng2}) ,url(${userInfo?.avatarUrl})`,
@@ -31,24 +39,25 @@ const Index = () => {
             backgroundSize: "cover"
         }}
         /> */}
-        <Canvas style='width: 300px; height: 200px;' canvasId='canvas' />
-      </View>
-      <View className='photo-bottom'>
-        <Button
-          className='avatar-wrapper'
+        <View className="photo-compose-container">
+       { !preview ? (
+       <View>
+       <Button
+       className="avatar-wrapper"
           open-type='chooseAvatar'
           onChooseAvatar={(e) => {
             const { avatarUrl } = e.detail;
             console.log(avatarUrl);
-            const ctx = Taro.createCanvasContext("canvas");
-            ctx.drawImage(avatarUrl, 0, 0, 100, 100);
-            ctx.drawImage(maskPng, 0, 0, 100, 100);
+            setPreview(true)
+const ctx = Taro.createCanvasContext("canvas");
+            ctx.drawImage(avatarUrl, 0, 0, 300, 300);
+            ctx.drawImage(maskPng, 0, 0, 300, 300);
             ctx.draw(true, () => {
               Taro.canvasToTempFilePath({
                 x: 0,
                 y: 0,
-                width: 100,
-                height: 100,
+                width: 300,
+                height: 300,
                 canvasId: "canvas",
                 success: function (res) {
                   console.log(res.tempFilePath);
@@ -69,8 +78,18 @@ const Index = () => {
                             });
                           },
                         });
+                      }else {
+                        Taro.saveImageToPhotosAlbum({
+                          filePath: res.tempFilePath,
+                          success: function (res2) {
+                            console.log(res2);
+                          },
+                        });
                       }
                     },
+                    fail: function(err){
+                      console.log(err)
+                    }
                   });
                 },
               });
@@ -93,29 +112,19 @@ const Index = () => {
         >
           选择头像信息
         </Button>
-        <Button className='create-img' onClick={() => { }}>
+        <Button className='create-img' onClick={() => { 
+          
+        }}>
           保存至相册
         </Button>
-
-        <Swiper
-          className='test-h'
-          indicatorColor='#999'
-          indicatorActiveColor='#333'
-          vertical
-          circular
-          indicatorDots
-          autoplay
-        >
-          <SwiperItem>
-            <View className='demo-text-1'>1</View>
-          </SwiperItem>
-          <SwiperItem>
-            <View className='demo-text-2'>2</View>
-          </SwiperItem>
-          <SwiperItem>
-            <View className='demo-text-3'>3</View>
-          </SwiperItem>
-        </Swiper>
+        </View>
+        )
+        :<Canvas style='width: 100%; height: 100%;' canvasId='canvas' />
+        }
+        </View>
+        
+      </View>
+      <View className='photo-bottom'>
       </View>
     </View>
   );

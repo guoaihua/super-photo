@@ -1,5 +1,5 @@
 page, .wrapper {
-    background: #faf5e7;
+    background: linear-gradient(180deg, #FFEEBF 0%, #FAF6ED 100%);
     width: 100%;
     height: 100%;
 }
@@ -22,23 +22,35 @@ page, .wrapper {
         .photo-compose-container {
             width: 300px;
             height: 300px;
-            top: 154px;
-            left: 45px;
             border-radius: 30px;
             border: 1.5px;
-            // background-blend-mode: multiply; 
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            flex-direction: column;
+            .create-img,.avatar-wrapper {
+                background-color: #FFA112;
+                width: 200px;
+                height: 50px;
+                border-radius: 10px;
+                border: 1px;
+                gap: 10px;
+                margin-bottom: 10px;  
+            }
+
+            .avatar-wrapper {
+                background-color: #57BF6B;
+                color: white;
+            }
+            .create-img {
+                background-color: #1C1D20;
+                color: white;
+
+            }
         }
     }
 
     .photo-bottom {
-        .create-img,.avatar-wrapper {
-            background-color: #FFA112;
-            width: 280px;
-            height: 50px;
-            border-radius: 10px;
-            border: 1px;
-            gap: 10px;
-            margin-bottom: 10px;   
-        }
+
     }
 }
