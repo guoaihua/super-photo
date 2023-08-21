@@ -20,15 +20,16 @@ page, .wrapper {
         align-items: center;
 
         .photo-compose-container {
-            width: 300px;
-            height: 300px;
+            width: 300PX;
+            height: 300PX;
             border-radius: 30px;
             border: 1.5px;
             background-color: white;
             display: flex;
             justify-content: space-around;
             flex-direction: column;
-            .create-img,.avatar-wrapper {
+            overflow: hidden;
+            .avatar-wrapper {
                 background-color: #FFA112;
                 width: 200px;
                 height: 50px;
@@ -51,6 +52,37 @@ page, .wrapper {
     }
 
     .photo-bottom {
-
+        background: #fefefd;
+        padding-top: 20px;
+        .scrollview {
+            .scroll-item {
+                width: 100px;
+                height: 100px;
+                margin-right: 20px;
+                overflow: hidden;
+                border-radius: 10px;
+                display: inline-block;
+                cursor: pointer;
+            }
+        }
+        .create-img {
+            background-color: #FFA112;
+            width: 200px;
+            height: 50px;
+            border-radius: 10px;
+            border: 1px;
+            margin-bottom: 10px;  
+            margin-top: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            image {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+                vertical-align: middle;
+            }
+        }
     }
 }

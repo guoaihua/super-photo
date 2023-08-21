@@ -1,8 +1,7 @@
 export default {
   pages: [
-
-    "pages/index/index",
     "pages/photo/index",
+    "pages/index/index",
 
   ],
   window: {
