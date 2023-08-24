@@ -26,6 +26,7 @@ import test5 from "./imgs/selector-mask.png";
 import previewSvg from '../../images/icon-eyes.svg'
 import refreshSvg from '../../images/icon-refresh.svg'
 import shareSvg from '../../images/icon-share.svg'
+
 const PngList = [test1, test2, test3, test4, test5];
 
 const themes = [
@@ -163,40 +164,41 @@ const Index = () => {
             </View>
           ) : (
             <CoverView className='controls'>
-             <Canvas id="canvas" canvasId='canvas'  />
+                <Canvas id='canvas' canvasId='canvas' />
             </CoverView>
           )}
         </View>
         <View className='preview'>
           <View>
-            <Image  src={previewSvg}/> 查看预览
+            <Image src={previewSvg} /> 查看预览
           </View>
           <View
             onClick={() => {
               setPreview(false);
             }}
           >
-            <Image src={refreshSvg}/>
+            <Image src={refreshSvg} />
             重新上传
           </View>
         </View>
       </View>
       <View className='photo-bottom'>
-        <ScrollView 
-        className='themes-scrollview'
+        <ScrollView
+          className='themes-scrollview'
           scrollX
           style={{
             whiteSpace: "nowrap",
           }}
-          scrollIntoViewAlignment='nearest'>
+          scrollIntoViewAlignment='nearest'
+        >
           {
-            themes.map((theme,index)=> <View 
-            key={index}
-            className={activeTheme === index ? 'active scroll-item' : 'scroll-item'}
-            style={{
+            themes.map((theme, index) => <View
+              key={index}
+              className={activeTheme === index ? 'active scroll-item' : 'scroll-item'}
+              style={{
               marginLeft: index === 0 ? "20px" : 0,
             }}
-            onClick={()=>{
+              onClick={() => {
               index !== activeTheme && setActiveTheme(index)
             }}
             >
@@ -270,7 +272,7 @@ const Index = () => {
           ))}
         </ScrollView>
 
-        <View className="photo-operation">
+        <View className='photo-operation'>
           <View
             className='create-img'
             onClick={() => {
@@ -318,7 +320,7 @@ const Index = () => {
           >
             <Image src={Disk} /> 保存至相册
           </View>
-          <View className="share">
+          <View className='share'>
             <Image  src={shareSvg} />
           </View>
         </View>

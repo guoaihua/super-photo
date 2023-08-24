@@ -18,19 +18,35 @@ const Index = () => {
     <View className='wrapper'>
       <CustomNavigator title='头像工具' />
 
-      <View className="components-warpper">
-        <View className="components-card">
-          <View className="item-left"
+      <View className='components-warpper'>
+        <View className='components-card'>
+          <View className='item-left'
             onClick={() => {
               Taro.navigateTo({
                 url: '/pages/photo/index'
               })
-            }}>
+            }}
+          >
             <Image src={photo} />
           </View>
-          <View className="item-right">
-            <Image className="list-item-top" src={photo_top} />
-            <Image className="list-item-bottom" src={photo_bottom} />
+          <View className='item-right'>
+            <Image className='list-item-top' src={photo_top} />
+            <Image className='list-item-bottom' src={photo_bottom} />
+          </View>
+        </View>
+        <View className='components-card'>
+          <View className='item-left'
+            onClick={() => {
+              Taro.navigateTo({
+                url: '/pages/personal/index'
+              })
+            }}
+          >
+            <Image src={photo} />
+          </View>
+          <View className='item-right'>
+            <Image className='list-item-top' src={photo_top} />
+            <Image className='list-item-bottom' src={photo_bottom} />
           </View>
         </View>
       </View>
