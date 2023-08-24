@@ -26,22 +26,32 @@ page, .wrapper {
         .photo-compose-container {
             width: 300px;
             height: 300px;
-            border-radius: 30px;
+            border-radius: 30PX;
             border: 1.5px;
             background-color: white;
             display: flex;
             justify-content: space-around;
             flex-direction: column;
             overflow: hidden;
-            
-            .controls {
-                 border-radius: 40px!important;
-                 width: 250px;
-            }
 
+            .user-view {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+
+-webkit-backface-visibility: hidden;
+
+-webkit-transform: translate3d(0, 0, 0);
+             .image {
+               
+             }
+            }
             #canvas {
                 width: 300px!important;
                  height:  300px!important;
+                 position: absolute;
+                 top: -999999px;
+                 left: 9999px;
             }
             .avatar-wrapper {
                 width: 200px;

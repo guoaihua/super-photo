@@ -28,7 +28,7 @@ const CustomNavigator = (props) => {
             {!showBackBtn ? (title ?? '头像工具') : (
                 <View style={{display: 'flex', alignItems: 'center'}}>
                     <Image src={backBtn} style={{ width: "24px", height: "24px", marginLeft: '15px',position: 'absolute'}} onClick={()=>{ Taro.navigateBack()}} />
-                    <View style={{ textAlign: 'center', width: '100%'}}>
+                    <View className="other" style={{ textAlign: 'center', width: '100%'}}>
                         <Text>{title}</Text>
                     </View>
                 </View>

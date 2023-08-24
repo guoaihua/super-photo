@@ -9,7 +9,7 @@ import {
   SwiperItem,
   ScrollView,
   Icon,
-  CoverView
+ CoverImage
 } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { useEnv, useNavigationBar, useModal, useToast } from "taro-hooks";
@@ -26,6 +26,7 @@ import test5 from "./imgs/selector-mask.png";
 import previewSvg from '../../images/icon-eyes.svg'
 import refreshSvg from '../../images/icon-refresh.svg'
 import shareSvg from '../../images/icon-share.svg'
+import test10 from './imgs/selector-mask.png'
 
 const PngList = [test1, test2, test3, test4, test5];
 
@@ -87,22 +88,39 @@ const themes = [
 ]
 
 const Index = () => {
-  const [userInfo, setUserInfo] = useState<{
-    avatarUrl: string;
-  }>();
+  const [userInfo, setUserInfo] = useState();
   const [preview, setPreview] = useState(false);
   console.log(userInfo);
   const [tempFilePath, setTempFilePath] = useState("");
   const [currentUserPhoto, setCurrentUserPhoto] = useState<Uint8ClampedArray>();
   const [activeTheme, setActiveTheme] = useState(0)
+  const [activePic, setActivePic] = useState(-1)
   const [canvasInfo, setCanvasInfo] = useState<Taro.NodesRef.BoundingClientRectCallbackResult>()
 
-  useEffect(()=>{
-    if(canvasInfo || !preview){
-      return
-    }
 
-}, [preview])
+  const makeGarden = (ctx, x,y,r = 30)=>{
+    console.log(ctx, x, y, r)
+    ctx.moveTo(r,0)
+    ctx.beginPath()
+    ctx.arc(r, r, r, 1.5 * Math.PI, Math.PI, true)
+    ctx.lineTo(0, y - r)
+    ctx.arc(r,y-r, r, Math.PI, Math.PI * 0.5, true)
+
+    ctx.lineTo(x-r, y)
+
+    ctx.arc(x-r, y-r, r, Math.PI * 0.5, 0, true)
+
+    ctx.lineTo(x, r)
+
+    ctx.arc(x-r, r, r, 0, Math.PI*1.5, true)
+
+//     ctx.setStrokeStyle('red')
+// ctx.stroke()
+    ctx.strokeStyle = "transparent";
+    ctx.stroke();
+    ctx.lineTo(r,0)
+    ctx.clip()
+  }
 
   return (
     <View className='wrapper'>
@@ -118,13 +136,29 @@ const Index = () => {
                   const { avatarUrl } = e.detail;
                   console.log(avatarUrl);
                   setPreview(true);
+                                    //获取全局唯一的文件管理器
+                  Taro.getFileSystemManager()
+                  .readFile({ //读取本地文件内容
+                      filePath: avatarUrl, // 文件路径
+                      encoding: 'base64', // 返回格式
+                      success: ({data}) => {
+                        setUserInfo('data:image/png;base64,' + data)
+                      },
+                      fail(res) {
+                      console.log('fail', res)
+                      }
+                  });
                   const ctx = Taro.createCanvasContext("canvas");
+                  ctx.save()
                   if(!canvasInfo?.width){
                    return Taro.createSelectorQuery().select('#canvas').boundingClientRect(function(rect){
                       console.log(rect)
                       setCanvasInfo(rect)
                       const canvasWidth = rect.width;
                       const canvasHeight = rect.height;
+
+                      makeGarden(ctx, canvasWidth,canvasHeight)
+
                       ctx.drawImage(avatarUrl, 0, 0, canvasWidth,canvasHeight );
                       ctx.draw(false, () => {
                         // 每次绘制成功之后保存下当前的源数据
@@ -163,9 +197,19 @@ const Index = () => {
               </Button>
             </View>
           ) : (
-            <CoverView className='controls'>
+            //  ios真机不支持多个bg-image，且cover-image、canvas等原生组件均不支持圆角，故采用多个背景图片重叠
+            // view的bg-image不支持临时路径，先转换成base-64加载，此处也可以直接使用image组件
+              <View style={{
+                background: `url(${userInfo}) no-repeat center`,
+                backgroundSize: "100%"
+              }} className="user-view">
+
+                {themes[activeTheme]?.children?.[activePic] && <Image src={ themes[activeTheme]?.children?.[activePic]} style={{
+                   width: "100%",
+                   height: "100%"
+                }}></Image>}
                 <Canvas id='canvas' canvasId='canvas' />
-            </CoverView>
+              </View>
           )}
         </View>
         <View className='preview'>
@@ -174,7 +218,15 @@ const Index = () => {
           </View>
           <View
             onClick={() => {
+              const ctx = Taro.createCanvasContext("canvas");
+
               setPreview(false);
+              // 清除临时数据
+              setTempFilePath('');
+              setActivePic(-1);
+              setActiveTheme(0);
+              setCurrentUserPhoto(undefined);
+              ctx.restore()
             }}
           >
             <Image src={refreshSvg} />
@@ -222,9 +274,11 @@ const Index = () => {
                 marginLeft: index === 0 ? "20px" : 0,
               }}
               onClick={() => {
+
+                activePic !== index && setActivePic(index)
                 const ctx = Taro.createCanvasContext("canvas");
-                console.log(ctx)
                 if (currentUserPhoto) {
+                 // 重新绘制
                   Taro.canvasPutImageData({
                     canvasId: "canvas",
                     width: canvasInfo?.width || 0 ,
@@ -233,7 +287,8 @@ const Index = () => {
                     y: 0,
                     data: currentUserPhoto,
                     success: function (res) {
-                      ctx.drawImage(i, 0, 0, canvasInfo?.width || 0, canvasInfo?.height || 0);
+                      // 裁剪形状
+                      ctx.drawImage(i, 0, 0, canvasInfo?.width  || 0, canvasInfo?.height  || 0);
                       ctx.draw(true, () => {
                         Taro.canvasToTempFilePath({
                           x: 0,
