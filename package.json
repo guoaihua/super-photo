@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "description": "微信超级头像装饰器",
-  "templateInfo": {
-    "name": "taro-hooks@2x",
-    "typescript": true,
-    "css": "sass"
-  },
   "scripts": {
     "build:weapp": "taro build --type weapp",
     "build:swan": "taro build --type swan",

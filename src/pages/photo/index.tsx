@@ -1,232 +1,313 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
   Button,
   Image,
   Canvas,
-  Swiper,
-  SwiperItem,
   ScrollView,
-  Icon,
- CoverImage
 } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { useEnv, useNavigationBar, useModal, useToast } from "taro-hooks";
-import maskPng from "./cn_mask_1.png";
-import maskPng2 from "./mask_china-02.png";
+// import maskPng from "./cn_mask_1.png";
+// import maskPng2 from "./mask_china-02.png";
 import "./index.scss";
-import CustomNavigator from "../../components/CustomNavigator";
-import Disk from "./imgs/disk.png";
-import test1 from "./imgs/test1.png";
-import test2 from "./imgs/test2.png";
-import test3 from "./imgs/test3.png";
-import test4 from "./imgs/test4.png";
-import test5 from "./imgs/selector-mask.png";
-import previewSvg from '../../images/icon-eyes.svg'
-import refreshSvg from '../../images/icon-refresh.svg'
-import shareSvg from '../../images/icon-share.svg'
-import test10 from './imgs/selector-mask.png'
+import CustomNavigator from "@/components/CustomNavigator";
+import {
+  makeImage,
+  saveImage,
+  chooseLocalImage,
+  getTempFile,
+} from "@/libs/common";
+import { useCansvasInfo } from "@/hooks/index";
 
-const PngList = [test1, test2, test3, test4, test5];
+import Preview from "@/components/Preview";
+
+import Disk from "@/images/disk.png";
+import previewSvg from "@/images/icon-eyes.svg";
+import refreshSvg from "@/images/icon-refresh.svg";
+import shareSvg from "@/images/icon-share.svg";
+
+import nd_10_1 from "@/images/101/sticker_nd_01.png";
+import nd_10_2 from "@/images/101/sticker_nd_02.png";
+import nd_10_3 from "@/images/101/sticker_nd_03.png";
+import nd_10_4 from "@/images/101/sticker_nd_04.png";
+import nd_10_5 from "@/images/101/sticker_nd_05.png";
+import nd_10_6 from "@/images/101/sticker_nd_06.png";
+import nd_10_7 from "@/images/101/sticker_nd_07.png";
+
+import sticker_china_01 from "@/images/china/sticker_china_01.png";
+import sticker_china_02 from "@/images/china/sticker_china_02.png";
+import sticker_china_03 from "@/images/china/sticker_china_03.png";
+import sticker_china_04 from "@/images/china/sticker_china_04.png";
+import sticker_china_05 from "@/images/china/sticker_china_05.png";
+import sticker_china_06 from "@/images/china/sticker_china_06.png";
+import sticker_china_07 from "@/images/china/sticker_china_07.png";
+import sticker_china_08 from "@/images/china/sticker_china_08.png";
+import sticker_china_09 from "@/images/china/sticker_china_09.png";
+import sticker_china_10 from "@/images/china/sticker_china_10.png";
+import sticker_china_11 from "@/images/china/sticker_china_11.png";
+import sticker_china_12 from "@/images/china/sticker_china_12.png";
+import sticker_china_13 from "@/images/china/sticker_china_13.png";
+import sticker_china_14 from "@/images/china/sticker_china_14.png";
+import sticker_china_15 from "@/images/china/sticker_china_15.png";
+
+import sticker_panda_01 from "@/images/panda/sticker_panda_01.png";
+import sticker_panda_02 from "@/images/panda/sticker_panda_02.png";
+import sticker_panda_03 from "@/images/panda/sticker_panda_03.png";
+import sticker_panda_04 from "@/images/panda/sticker_panda_04.png";
+import sticker_panda_05 from "@/images/panda/sticker_panda_05.png";
+import sticker_panda_06 from "@/images/panda/sticker_panda_06.png";
+import sticker_panda_07 from "@/images/panda/sticker_panda_07.png";
+import sticker_panda_08 from "@/images/panda/sticker_panda_08.png";
+import sticker_panda_09 from "@/images/panda/sticker_panda_09.png";
+import sticker_panda_10 from "@/images/panda/sticker_panda_10.png";
+import sticker_panda_11 from "@/images/panda/sticker_panda_11.png";
+import sticker_panda_12 from "@/images/panda/sticker_panda_12.png";
+import sticker_panda_13 from "@/images/panda/sticker_panda_13.png";
+
+import sticker_worker_01 from "@/images/worker/sticker_worker_01.png";
+import sticker_worker_02 from "@/images/worker/sticker_worker_02.png";
+import sticker_worker_03 from "@/images/worker/sticker_worker_03.png";
+import sticker_worker_04 from "@/images/worker/sticker_worker_04.png";
+import sticker_worker_05 from "@/images/worker/sticker_worker_05.png";
+import sticker_worker_06 from "@/images/worker/sticker_worker_06.png";
+import sticker_worker_07 from "@/images/worker/sticker_worker_07.png";
+import sticker_worker_08 from "@/images/worker/sticker_worker_08.png";
+import sticker_worker_09 from "@/images/worker/sticker_worker_09.png";
+import sticker_worker_10 from "@/images/worker/sticker_worker_10.png";
+import sticker_worker_11 from "@/images/worker/sticker_worker_11.png";
+import sticker_worker_12 from "@/images/worker/sticker_worker_12.png";
+import sticker_worker_13 from "@/images/worker/sticker_worker_13.png";
+import sticker_worker_14 from "@/images/worker/sticker_worker_14.png";
+import sticker_worker_15 from "@/images/worker/sticker_worker_15.png";
+import sticker_worker_16 from "@/images/worker/sticker_worker_16.png";
+import sticker_worker_17 from "@/images/worker/sticker_worker_17.png";
+
+import sticker_animal_01 from "@/images/animal/sticker_animal_01.png";
+import sticker_animal_02 from "@/images/animal/sticker_animal_02.png";
+import sticker_animal_03 from "@/images/animal/sticker_animal_03.png";
+import sticker_animal_04 from "@/images/animal/sticker_animal_04.png";
+import sticker_animal_05 from "@/images/animal/sticker_animal_05.png";
+import sticker_animal_06 from "@/images/animal/sticker_animal_06.png";
+import sticker_animal_07 from "@/images/animal/sticker_animal_07.png";
+import sticker_animal_08 from "@/images/animal/sticker_animal_08.png";
+import sticker_animal_09 from "@/images/animal/sticker_animal_09.png";
+import sticker_animal_10 from "@/images/animal/sticker_animal_10.png";
+import sticker_animal_11 from "@/images/animal/sticker_animal_11.png";
+import sticker_animal_12 from "@/images/animal/sticker_animal_12.png";
+import sticker_animal_13 from "@/images/animal/sticker_animal_13.png";
+import sticker_animal_14 from "@/images/animal/sticker_animal_14.png";
+import sticker_animal_15 from "@/images/animal/sticker_animal_15.png";
+import sticker_animal_16 from "@/images/animal/sticker_animal_16.png";
+import sticker_animal_17 from "@/images/animal/sticker_animal_17.png";
+import sticker_animal_18 from "@/images/animal/sticker_animal_18.png";
+import sticker_animal_19 from "@/images/animal/sticker_animal_19.png";
+
+import defaultImage from "./imgs/default.png";
 
 const themes = [
   {
-    label: '热门',
+    label: "热门",
     children: [
-      test1, test2
-    ]
+      defaultImage,
+      nd_10_1,
+      nd_10_2,
+      nd_10_3,
+      nd_10_4,
+      nd_10_5,
+      nd_10_6,
+      nd_10_7,
+    ],
   },
   {
-    label: "中国",
+    label: "中华",
     children: [
-      test3, test4, test5
-    ]
+      sticker_china_01,
+      sticker_china_02,
+      sticker_china_03,
+      sticker_china_04,
+      sticker_china_05,
+      sticker_china_06,
+      sticker_china_07,
+      sticker_china_08,
+      sticker_china_09,
+      sticker_china_10,
+      sticker_china_11,
+      sticker_china_12,
+      sticker_china_13,
+      sticker_china_14,
+      sticker_china_15,
+    ],
   },
   {
-    label: '熊猫',
+    label: "熊猫",
     children: [
-      ...PngList
-    ]
+      sticker_panda_01,
+      sticker_panda_02,
+      sticker_panda_03,
+      sticker_panda_04,
+      sticker_panda_05,
+      sticker_panda_06,
+      sticker_panda_07,
+      sticker_panda_08,
+      sticker_panda_09,
+      sticker_panda_10,
+      sticker_panda_11,
+      sticker_panda_12,
+      sticker_panda_13,
+    ],
   },
   {
     label: "打工人",
     children: [
-      ...PngList
-    ]
+      sticker_worker_01,
+      sticker_worker_02,
+      sticker_worker_03,
+      sticker_worker_04,
+      sticker_worker_05,
+      sticker_worker_06,
+      sticker_worker_07,
+      sticker_worker_08,
+      sticker_worker_09,
+      sticker_worker_10,
+      sticker_worker_11,
+      sticker_worker_12,
+      sticker_worker_13,
+      sticker_worker_14,
+      sticker_worker_15,
+      sticker_worker_16,
+      sticker_worker_17,
+    ],
   },
   {
-    label: '生肖',
+    label: "动物园",
     children: [
-      ...PngList
-    ]
+      sticker_animal_01,
+      sticker_animal_02,
+      sticker_animal_03,
+      sticker_animal_04,
+      sticker_animal_05,
+      sticker_animal_06,
+      sticker_animal_07,
+      sticker_animal_08,
+      sticker_animal_09,
+      sticker_animal_10,
+      sticker_animal_11,
+      sticker_animal_12,
+      sticker_animal_13,
+      sticker_animal_14,
+      sticker_animal_15,
+      sticker_animal_16,
+      sticker_animal_17,
+      sticker_animal_18,
+      sticker_animal_19,
+    ],
   },
-  {
-    label: "搞笑",
-    children: [
-      ...PngList
-    ]
-  },
-  {
-    label: "打工人",
-    children: [
-      ...PngList
-    ]
-  },
-  {
-    label: '生肖',
-    children: [
-      ...PngList
-    ]
-  },
-  {
-    label: "搞笑",
-    children: [
-      ...PngList
-    ]
-  }
-]
+];
+
+const canvasId = "canvas";
 
 const Index = () => {
-  const [userInfo, setUserInfo] = useState();
-  const [preview, setPreview] = useState(false);
-  console.log(userInfo);
-  const [tempFilePath, setTempFilePath] = useState("");
-  const [currentUserPhoto, setCurrentUserPhoto] = useState<Uint8ClampedArray>();
-  const [activeTheme, setActiveTheme] = useState(0)
-  const [activePic, setActivePic] = useState(-1)
-  const [canvasInfo, setCanvasInfo] = useState<Taro.NodesRef.BoundingClientRectCallbackResult>()
+  const [userInfo, setUserInfo] = useState("");
+  const [currentUserPhoto, setCurrentUserPhoto] = useState("");
+  const [activeTheme, setActiveTheme] = useState(0);
+  const [activePic, setActivePic] = useState(-1);
 
-
-  const makeGarden = (ctx, x,y,r = 30)=>{
-    console.log(ctx, x, y, r)
-    ctx.moveTo(r,0)
-    ctx.beginPath()
-    ctx.arc(r, r, r, 1.5 * Math.PI, Math.PI, true)
-    ctx.lineTo(0, y - r)
-    ctx.arc(r,y-r, r, Math.PI, Math.PI * 0.5, true)
-
-    ctx.lineTo(x-r, y)
-
-    ctx.arc(x-r, y-r, r, Math.PI * 0.5, 0, true)
-
-    ctx.lineTo(x, r)
-
-    ctx.arc(x-r, r, r, 0, Math.PI*1.5, true)
-
-//     ctx.setStrokeStyle('red')
-// ctx.stroke()
-    ctx.strokeStyle = "transparent";
-    ctx.stroke();
-    ctx.lineTo(r,0)
-    ctx.clip()
-  }
+  const [preViewImg, setPreViewImg] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const canvasInfo = useCansvasInfo(userInfo);
 
   return (
-    <View className='wrapper'>
-      <CustomNavigator showBackBtn title='头像挂件' />
-      <View className='photo-top'>
-        <View className='photo-compose-container'>
-          {!preview ? (
+    <View className="wrapper">
+      <CustomNavigator showBackBtn title="头像挂件" />
+      <View className="photo-top">
+        {/* 头像显示区域 */}
+        <View className="photo-compose-container">
+          {!userInfo ? (
             <View>
               <Button
-                className='avatar-wrapper'
-                open-type='chooseAvatar'
+                className="avatar-wrapper select-btn"
+                open-type="chooseAvatar"
                 onChooseAvatar={(e) => {
                   const { avatarUrl } = e.detail;
-                  console.log(avatarUrl);
-                  setPreview(true);
-                                    //获取全局唯一的文件管理器
-                  Taro.getFileSystemManager()
-                  .readFile({ //读取本地文件内容
-                      filePath: avatarUrl, // 文件路径
-                      encoding: 'base64', // 返回格式
-                      success: ({data}) => {
-                        setUserInfo('data:image/png;base64,' + data)
-                      },
-                      fail(res) {
-                      console.log('fail', res)
-                      }
+                  getTempFile(avatarUrl, (data) => {
+                    setCurrentUserPhoto(avatarUrl);
+                    setUserInfo("data:image/png;base64," + data);
                   });
-                  const ctx = Taro.createCanvasContext("canvas");
-                  ctx.save()
-                  if(!canvasInfo?.width){
-                   return Taro.createSelectorQuery().select('#canvas').boundingClientRect(function(rect){
-                      console.log(rect)
-                      setCanvasInfo(rect)
-                      const canvasWidth = rect.width;
-                      const canvasHeight = rect.height;
-
-                      makeGarden(ctx, canvasWidth,canvasHeight)
-
-                      ctx.drawImage(avatarUrl, 0, 0, canvasWidth,canvasHeight );
-                      ctx.draw(false, () => {
-                        // 每次绘制成功之后保存下当前的源数据
-                        Taro.canvasGetImageData({
-                          canvasId: "canvas",
-                          x: 0,
-                          y: 0,
-                          width: canvasWidth,
-                          height: canvasHeight,
-                          success: (res) => {
-                            setCurrentUserPhoto(res?.data);
-                          },
-                        });
-                      });
-                    }).exec()
-                  }
-
-                  ctx.drawImage(avatarUrl, 0, 0, canvasInfo.width, canvasInfo.height);
-                  ctx.draw(false, () => {
-                    // 每次绘制成功之后保存下当前的源数据
-                    Taro.canvasGetImageData({
-                      canvasId: "canvas",
-                      x: 0,
-                      y: 0,
-                      width: canvasInfo.width,
-                      height: canvasInfo.height,
-                      success: (res) => {
-                        setCurrentUserPhoto(res?.data);
-                      },
-                    });
-                  });
-
                 }}
               >
-                使用微信头像或者本地相册
+                使用微信头像
               </Button>
+              <Button
+                className="select-btn local-album"
+                onClick={() => {
+                  chooseLocalImage((tempFilePath, data) => {
+                    setCurrentUserPhoto(tempFilePath);
+                    setUserInfo("data:image/png;base64," + data);
+                  });
+                }}
+              >
+                本地相册上传 <View className="recommend">推荐</View>
+              </Button>
+              <Text> 本地上传图片更清晰</Text>
             </View>
           ) : (
             //  ios真机不支持多个bg-image，且cover-image、canvas等原生组件均不支持圆角，故采用多个背景图片重叠
             // view的bg-image不支持临时路径，先转换成base-64加载，此处也可以直接使用image组件
-              <View style={{
+            <View
+              style={{
                 background: `url(${userInfo}) no-repeat center`,
-                backgroundSize: "100%"
-              }} className="user-view">
-
-                {themes[activeTheme]?.children?.[activePic] && <Image src={ themes[activeTheme]?.children?.[activePic]} style={{
-                   width: "100%",
-                   height: "100%"
-                }}></Image>}
-                <Canvas id='canvas' canvasId='canvas' />
-              </View>
+                backgroundSize: "100%",
+              }}
+              className="user-view"
+            >
+              {themes[activeTheme]?.children?.[activePic] && (
+                <Image
+                  src={themes[activeTheme]?.children?.[activePic]}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                ></Image>
+              )}
+              <Canvas id="canvas" canvasId={canvasId} />
+            </View>
           )}
         </View>
-        <View className='preview'>
-          <View>
+        {/* 预览操作按钮 */}
+        <View
+          className={
+            currentUserPhoto && themes[activeTheme]?.children?.[activePic]
+              ? "preview"
+              : "preview dd-disable"
+          }
+        >
+          <View
+            onClick={() => {
+              makeImage({
+                canvasInfo,
+                canvasId,
+                bgImg: currentUserPhoto,
+                coverImg: themes[activeTheme]?.children?.[activePic],
+                cb: (tempFilePath) => {
+                  setPreViewImg(tempFilePath);
+                  setShowModal(true);
+                },
+                showGarden: true
+              });
+            }}
+          >
             <Image src={previewSvg} /> 查看预览
           </View>
           <View
             onClick={() => {
               const ctx = Taro.createCanvasContext("canvas");
-
-              setPreview(false);
               // 清除临时数据
-              setTempFilePath('');
+              setUserInfo("");
               setActivePic(-1);
               setActiveTheme(0);
-              setCurrentUserPhoto(undefined);
-              ctx.restore()
+              setCurrentUserPhoto("");
+              ctx.restore();
             }}
           >
             <Image src={refreshSvg} />
@@ -234,92 +315,65 @@ const Index = () => {
           </View>
         </View>
       </View>
-      <View className='photo-bottom'>
+      {/* 生成相册图片 */}
+      <View className="photo-bottom">
         <ScrollView
-          className='themes-scrollview'
+          className="themes-scrollview"
           scrollX
           style={{
             whiteSpace: "nowrap",
           }}
-          scrollIntoViewAlignment='nearest'
+          scrollIntoViewAlignment="nearest"
         >
-          {
-            themes.map((theme, index) => <View
+          {themes.map((theme, index) => (
+            <View
               key={index}
-              className={activeTheme === index ? 'active scroll-item' : 'scroll-item'}
+              className={
+                activeTheme === index ? "active scroll-item" : "scroll-item"
+              }
               style={{
-              marginLeft: index === 0 ? "20px" : 0,
-            }}
+                marginLeft: index === 0 ? "20px" : 0,
+              }}
               onClick={() => {
-              index !== activeTheme && setActiveTheme(index)
-            }}
+                if (index !== activeTheme) {
+                  setActiveTheme(index);
+                  setActivePic(-1);
+                }
+              }}
             >
               {theme.label}
-            </View>)
-          }
+            </View>
+          ))}
         </ScrollView>
         <ScrollView
-          className='photo-scrollview'
+          className="photo-scrollview"
           scrollX
           style={{
             whiteSpace: "nowrap",
           }}
-          scrollIntoViewAlignment='nearest'
+          scrollIntoViewAlignment="nearest"
         >
           {themes[activeTheme]?.children.map((i, index) => (
             <View
-              className='scroll-item'
+              className="scroll-item"
               key={index}
               style={{
                 marginLeft: index === 0 ? "20px" : 0,
               }}
               onClick={() => {
-
-                activePic !== index && setActivePic(index)
-                const ctx = Taro.createCanvasContext("canvas");
-                if (currentUserPhoto) {
-                 // 重新绘制
-                  Taro.canvasPutImageData({
-                    canvasId: "canvas",
-                    width: canvasInfo?.width || 0 ,
-                    height: canvasInfo?.height || 0,
-                    x: 0,
-                    y: 0,
-                    data: currentUserPhoto,
-                    success: function (res) {
-                      // 裁剪形状
-                      ctx.drawImage(i, 0, 0, canvasInfo?.width  || 0, canvasInfo?.height  || 0);
-                      ctx.draw(true, () => {
-                        Taro.canvasToTempFilePath({
-                          x: 0,
-                          y: 0,
-                          width: canvasInfo?.width || 0,
-                          height: canvasInfo?.height || 0,
-                          canvasId: "canvas",
-                          success: function (res) {
-                            console.log(res);
-                            setTempFilePath(res.tempFilePath);
-                          },
-                        });
-                      });
-                    },
-                  });
-                } else {
-                  ctx.drawImage(i, 0, 0, canvasInfo?.width || 0, canvasInfo?.height || 0);
-                  ctx.draw(!tempFilePath ? true : false, () => {
-                    Taro.canvasToTempFilePath({
-                      x: 0,
-                      y: 0,
-                      width: canvasInfo?.width || 0,
-                      height: canvasInfo?.height || 0,
-                      canvasId: "canvas",
-                      success: function (res) {
-                        console.log(res);
-                        setTempFilePath(res.tempFilePath);
-                      },
-                    });
+                if (!currentUserPhoto) {
+                  return Taro.showToast({
+                    title: "请先选择头像",
                   });
                 }
+
+                // 选择挂件蒙层
+                // 选中热门区第一个，恢复默认头像，清除其它选项
+                if (activeTheme === 0 && index === 0) {
+                  return setActivePic(-1);
+                }
+
+                activePic !== index && setActivePic(index);
               }}
             >
               <Image src={i} style={{ width: "100%", height: "100%" }} />
@@ -327,60 +381,58 @@ const Index = () => {
           ))}
         </ScrollView>
 
-        <View className='photo-operation'>
+        <View className="photo-operation">
           <View
-            className='create-img'
+            className="create-img"
             onClick={() => {
-              if (!tempFilePath) {
+              if (
+                !currentUserPhoto ||
+                !themes[activeTheme]?.children?.[activePic]
+              ) {
                 return Taro.showToast({
-                  title: '请先选择头像'
-                })
+                  title: "请先设置图片",
+                });
               }
-              // 可以通过 Taro.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
-              Taro.getSetting({
-                success: function (res1) {
-                  if (!res1.authSetting["scope.writePhotosAlbum"]) {
-                    Taro.authorize({
-                      scope: "scope.writePhotosAlbum",
-                      success: function () {
-                        // 用户已经同意小程序使用录音功能，后续调用 Taro.startRecord 接口不会弹窗询问
-                        Taro.saveImageToPhotosAlbum({
-                          filePath: tempFilePath,
-                          success: function (res2) {
-                            console.log(res2);
-                            Taro.showToast({
-                              title: "success",
-                            });
+              makeImage({
+                canvasInfo,
+                canvasId,
+                bgImg: currentUserPhoto,
+                coverImg: themes[activeTheme]?.children?.[activePic],
+                cb: (tempFilePath) => {
+                  // 可以通过 Taro.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
+                  Taro.getSetting({
+                    success: function (res1) {
+                      if (!res1.authSetting["scope.writePhotosAlbum"]) {
+                        Taro.authorize({
+                          scope: "scope.writePhotosAlbum",
+                          success: function () {
+                            saveImage(tempFilePath);
                           },
                         });
-                      },
-                    });
-                  } else {
-                    Taro.saveImageToPhotosAlbum({
-                      filePath: tempFilePath,
-                      success: function (res2) {
-                        console.log(res2);
-                        Taro.showToast({
-                          title: "success",
-                        });
-                      },
-                    });
-                  }
-                },
-                fail: function (err) {
-                  console.log(err);
+                      } else {
+                        saveImage(tempFilePath);
+                      }
+                    },
+                    fail: function (err) {
+                      console.log(err);
+                    },
+                  });
                 },
               });
             }}
           >
             <Image src={Disk} /> 保存至相册
           </View>
-          <View className='share'>
-            <Image  src={shareSvg} />
+          <View className="share">
+            <Image src={shareSvg} />
           </View>
         </View>
-
       </View>
+      <Preview
+        showModal={showModal}
+        setShowModal={setShowModal}
+        preViewImg={preViewImg}
+      />
     </View>
   );
 };

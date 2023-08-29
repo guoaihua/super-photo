@@ -14,6 +14,13 @@
     "strictNullChecks": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["./src/components/*"],
+      "@/images/*": ["./src/images/*"],
+      "@/libs/*": ["./src/libs/*"],
+      "@/pages/*": [ "./src/pages/*"],
+      "@/hooks/*": [ "./src/hooks/*"]
+    },
     "rootDir": ".",
     "jsx": "react-jsx",
     "jsxFactory": "React.createElement",
@@ -21,7 +28,8 @@
     "resolveJsonModule": true,
     "typeRoots": [
       "node_modules/@types"
-    ]
+    ],
+ 
   },
   "include": ["./src", "./types"],
   "compileOnSave": false

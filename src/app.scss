@@ -1,7 +1,13 @@
 page {
-    background: linear-gradient(180deg, #FFEEBF 0%, #FAF6ED 100%);
-    width:100%;
-    height: 100%;
-    padding: 0px!important;
-    font-family: PingFang SC, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+  background: linear-gradient(180deg, #ffeebf 0%, #faf6ed 100%);
+  width: 100%;
+  height: 100%;
+  padding: 0px !important;
+  font-family: PingFang SC, "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+    sans-serif;
+
+  .dd-disable {
+    opacity: 0.4;
+    pointer-events: none;
+  }
 }

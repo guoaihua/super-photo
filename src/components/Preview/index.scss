@@ -1,0 +1,52 @@
+.pre-container {
+  position: fixed;
+  width: 100%!important;
+  height: 100%!important;
+  background-color: #000000CC;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  scroll-view {
+    position: relative;
+    view {
+      text-align: center;
+      display: inline-block;
+      .bg {
+        width: 300px;
+        height: 559px;
+      }
+      .cover {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+      }
+      margin-right: 5%;
+    }
+
+    view:first-child {
+      margin:0 5% 10%;
+      .cover {
+        left: 30.89px; // 这里需要手动调整，图像是拼上去的
+        top: 105.32px;
+      }
+    }
+
+    view:nth-child(2) {
+      position: relative;
+      .cover {
+        width: 59.68px;
+        height: 59.68px;
+        top: 259.11px; // 这里需要手动调整，图像是拼上去的
+        right: 9.87px;
+      }
+    }
+
+
+  }
+}
+
+.hidden {
+  display: none;
+}

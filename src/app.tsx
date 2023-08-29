@@ -1,35 +1,34 @@
-import { Component, PropsWithChildren  } from 'react'
-  import './app.scss'
-import Taro from '@tarojs/taro'
+import { Component, PropsWithChildren } from "react";
+import "./app.scss";
+import Taro from "@tarojs/taro";
 
-    class App extends  Component < PropsWithChildren > {
-      taroGlobalData = {}
+class App extends Component<PropsWithChildren> {
+  taroGlobalData = {};
 
-      onLaunch(options){
-        const statusBarHeight = Taro.getSystemInfoSync()?.statusBarHeight || 0
-        const menu = Taro.getMenuButtonBoundingClientRect()
+  onLaunch(options) {
+    const statusBarHeight = Taro.getSystemInfoSync()?.statusBarHeight || 0;
+    const menu = Taro.getMenuButtonBoundingClientRect();
 
-        const navBarHeight = (menu.top - statusBarHeight) * 2 + menu.height
+    const navBarHeight = (menu.top - statusBarHeight) * 2 + menu.height;
 
-        this.taroGlobalData = {
-          ...this.taroGlobalData,
-          navBarHeight,
-          statusBarHeight,
-          /** 胶囊信息 */
-          menuBtn: menu
-        }
+    this.taroGlobalData = {
+      ...this.taroGlobalData,
+      navBarHeight,
+      statusBarHeight,
+      /** 胶囊信息 */
+      menuBtn: menu,
+    };
+  }
+  componentDidMount() {}
 
-      }
-      componentDidMount() { }
+  componentDidShow() {}
 
-  componentDidShow() { }
-
-  componentDidHide() { }
+  componentDidHide() {}
 
   // this.props.children 是将要会渲染的页面
   render() {
-        return this.props.children
-      }
-    }
-      
-export default App
+    return this.props.children;
+  }
+}
+
+export default App;
