@@ -1,10 +1,10 @@
 export default {
   pages: [
+    "pages/piclib/index",
     "pages/index/index",
     "pages/photo/index",
     "pages/page101/index",
     "pages/personal/index",
-    "pages/piclib/index",
   ],
   window: {
     backgroundTextStyle: "light",
