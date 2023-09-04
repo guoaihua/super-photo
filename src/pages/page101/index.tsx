@@ -58,19 +58,19 @@ const Index = () => {
   const canvasInfo = useCansvasInfo(userInfo);
 
   return (
-    <View className="wrapper">
+    <View className='wrapper'>
       <CustomNavigator showBackBtn customHeader={logo} />
-      <View className="photo-top">
+      <View className='photo-top'>
         {/* 头像显示区域 */}
-        <View className="title">
+        <View className='title'>
           <Image src={titleImg}></Image>
         </View>
-        <View className="photo-compose-container">
+        <View className='photo-compose-container'>
           {!userInfo ? (
             <View>
               <Button
-                className="avatar-wrapper select-btn"
-                open-type="chooseAvatar"
+                className='avatar-wrapper select-btn'
+                open-type='chooseAvatar'
                 onChooseAvatar={(e) => {
                   const { avatarUrl } = e.detail;
                   getTempFile(avatarUrl, (data) => {
@@ -82,7 +82,7 @@ const Index = () => {
                 使用微信头像
               </Button>
               <Button
-                className="select-btn local-album"
+                className='select-btn local-album'
                 onClick={() => {
                   chooseLocalImage((tempFilePath, data) => {
                     setCurrentUserPhoto(tempFilePath);
@@ -90,7 +90,7 @@ const Index = () => {
                   });
                 }}
               >
-                本地相册上传 <View className="recommend">推荐</View>
+                本地相册上传 <View className='recommend'>推荐</View>
               </Button>
               <Text> 本地上传图片更清晰</Text>
             </View>
@@ -102,7 +102,7 @@ const Index = () => {
                 background: `url(${userInfo}) no-repeat center`,
                 backgroundSize: "100%",
               }}
-              className="user-view"
+              className='user-view'
             >
               {themes[activePic] && (
                 <Image
@@ -113,7 +113,7 @@ const Index = () => {
                   }}
                 ></Image>
               )}
-              <Canvas id="canvas" canvasId="canvas" />
+              <Canvas id='canvas' canvasId='canvas' />
             </View>
           )}
         </View>
@@ -158,18 +158,18 @@ const Index = () => {
         </View>
       </View>
       {/* 生成相册图片 */}
-      <View className="photo-bottom">
+      <View className='photo-bottom'>
         <ScrollView
-          className="photo-scrollview"
+          className='photo-scrollview'
           scrollX
           style={{
             whiteSpace: "nowrap",
           }}
-          scrollIntoViewAlignment="nearest"
+          scrollIntoViewAlignment='nearest'
         >
           {themes.map((i, index) => (
             <View
-              className="scroll-item"
+              className='scroll-item'
               key={index}
               style={{
                 marginLeft: index === 0 ? "20px" : 0,
@@ -196,9 +196,9 @@ const Index = () => {
           ))}
         </ScrollView>
 
-        <View className="photo-operation">
+        <View className='photo-operation'>
           <View
-            className="create-img"
+            className='create-img'
             onClick={() => {
               if (!currentUserPhoto || !themes[activePic]) {
                 return Taro.showToast({
@@ -235,7 +235,7 @@ const Index = () => {
           >
             <Image src={Disk} /> 保存至相册
           </View>
-          <View className="share">
+          <View className='share'>
             <Image src={shareSvg} />
           </View>
         </View>

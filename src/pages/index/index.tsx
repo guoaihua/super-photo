@@ -20,13 +20,13 @@ const activityList = [
 
 const Index = () => {
   return (
-    <View className="wrapper">
-      <CustomNavigator title="头像工具" />
-      <View className="components-warpper">
-        <View className="banner">
+    <View className='wrapper'>
+      <CustomNavigator title='头像工具' />
+      <View className='components-warpper'>
+        <View className='banner'>
           <Swiper
-            indicatorColor="#999"
-            indicatorActiveColor="#333"
+            indicatorColor='#999'
+            indicatorActiveColor='#333'
             circular
             indicatorDots={activityList?.length > 1}
             autoplay
@@ -47,23 +47,23 @@ const Index = () => {
         </View>
         {/* 卡片 */}
         <View
-          className="components-card"
+          className='components-card'
           onClick={() => {
             Taro.navigateTo({
               url: "/pages/photo/index",
             });
           }}
         >
-          <View className="item-left">
+          <View className='item-left'>
             <Image src={photo} />
-            <View className="tips">
+            <View className='tips'>
               <Image src={star}></Image>
               头像挂件
             </View>
           </View>
-          <View className="item-right">
-            <Image className="list-item-top" src={photo_top} />
-            <Image className="list-item-bottom" src={photo_bottom} />
+          <View className='item-right'>
+            <Image className='list-item-top' src={photo_top} />
+            <Image className='list-item-bottom' src={photo_bottom} />
           </View>
         </View>
         {/* <View className='components-card'>

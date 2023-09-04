@@ -5,6 +5,7 @@ export default {
     "pages/photo/index",
     "pages/page101/index",
     "pages/personal/index",
+    "pages/picloader/index"
   ],
   window: {
     backgroundTextStyle: "light",
