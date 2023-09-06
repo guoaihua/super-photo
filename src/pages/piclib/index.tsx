@@ -7,7 +7,6 @@ import CustomNavigator from "@/components/CustomNavigator";
 import dogsPng from './imgs/dogs.png'
 import './index.scss'
 
-
 const Index = () => {
 const [themesMap, setThemesMap] = useState({})
   useEffect(()=>{
@@ -44,7 +43,7 @@ const [themesMap, setThemesMap] = useState({})
                   }}
                   >
                     <View className='title'>{theme}</View>
-                    <Image src={dogsPng}> 111</Image>
+                    <Image src={dogsPng}></Image>
                   </View>
                 )
               })

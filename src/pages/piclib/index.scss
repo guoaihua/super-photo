@@ -33,8 +33,10 @@
       display: flex;
       flex-wrap: wrap;
       width: 100%;
+      justify-content: space-around;
       >view {
         width: 175px;
+        width: 40%;
         height: 108px;
         padding: 14px;
         border-radius: 10px;
