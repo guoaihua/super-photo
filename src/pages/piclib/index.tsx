@@ -7,6 +7,21 @@ import CustomNavigator from "@/components/CustomNavigator";
 import dogsPng from './imgs/dogs.png'
 import './index.scss'
 
+const themesTitleMap = {
+  dog: '修狗狗',
+  cat: '猫猫头',
+  cp: 'CP头像',
+  panda: '圆滚滚熊猫',
+  lineDog: '线条小狗',
+  hungry: '好饿啊',
+  crazy: '人哪有不疯的',
+  intimidating: '看起来不好惹',
+  y2k: '千禧年',
+  lucky: '时来运转',
+  mature: '成熟人士专用',
+  qq: 'QQ怀旧头像'
+}
+
 const Index = () => {
 const [themesMap, setThemesMap] = useState({})
   useEffect(()=>{
@@ -35,14 +50,14 @@ const [themesMap, setThemesMap] = useState({})
                         url: '/pages/picloader/index?title=12313',
                         success(res){
                           res.eventChannel.emit('sendPicLibInfo', {
-                            title: theme,
+                            title: themesTitleMap[theme] || theme,
                             data: themesMap[theme]
                           })
                         }
                       })
                   }}
                   >
-                    <View className='title'>{theme}</View>
+                    <View className='title'>{themesTitleMap[theme] || theme}</View>
                     <Image src={dogsPng}></Image>
                   </View>
                 )
