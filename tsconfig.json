@@ -19,7 +19,8 @@
       "@/images/*": ["./src/images/*"],
       "@/libs/*": ["./src/libs/*"],
       "@/pages/*": [ "./src/pages/*"],
-      "@/hooks/*": [ "./src/hooks/*"]
+      "@/hooks/*": [ "./src/hooks/*"],
+      "@/configs/*": [ "./src/configs/*"]
     },
     "rootDir": ".",
     "jsx": "react-jsx",

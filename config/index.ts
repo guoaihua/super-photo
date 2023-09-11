@@ -69,6 +69,7 @@ const config = {
     "@/libs": path.resolve(__dirname, "..", "src/libs"),
     "@/pages": path.resolve(__dirname, "..", "src/pages"),
     "@/hooks": path.resolve(__dirname, "..", "src/hooks"),
+    "@/configs": path.resolve(__dirname, "..", "src/configs")
   },
 };
 

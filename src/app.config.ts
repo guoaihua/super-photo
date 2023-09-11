@@ -1,10 +1,11 @@
 export default {
   pages: [
-    "pages/piclib/index",
+    "pages/personal/index",
+    "pages/collect/index",
     "pages/index/index",
+    "pages/piclib/index",
     "pages/photo/index",
     "pages/page101/index",
-    "pages/personal/index",
     "pages/picloader/index"
   ],
   window: {
@@ -28,6 +29,12 @@ export default {
         text: "头像库",
         iconPath: "./images/tabar/icon-tab-img.png",
         selectedIconPath: "./images/tabar/icon-tab-img_focus.png",
+      },
+      {
+        pagePath: "pages/personal/index",
+        text: "个人中心",
+        iconPath: "./images/tabar/icon-tab-user.png",
+        selectedIconPath: "./images/tabar/icon-tab-user_focus.png",
       },
     ],
   },

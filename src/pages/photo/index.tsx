@@ -7,7 +7,7 @@ import {
   Canvas,
   ScrollView,
 } from "@tarojs/components";
-import Taro from "@tarojs/taro";
+import Taro, {useRouter, useLoad} from "@tarojs/taro";
 // import maskPng from "./cn_mask_1.png";
 // import maskPng2 from "./mask_china-02.png";
 import CustomNavigator from "@/components/CustomNavigator";
@@ -207,7 +207,7 @@ const themes = [
 
 const canvasId = "canvas";
 
-const Index = () => {
+const Index = (props) => {
   const [userInfo, setUserInfo] = useState("");
   const [currentUserPhoto, setCurrentUserPhoto] = useState("");
   const [activeTheme, setActiveTheme] = useState(0);
@@ -216,6 +216,19 @@ const Index = () => {
   const [preViewImg, setPreViewImg] = useState("");
   const [showModal, setShowModal] = useState(false);
   const canvasInfo = useCansvasInfo(userInfo);
+  const router = useRouter()
+
+  useLoad(()=>{
+    // 头像库跳转赋予默认值
+    if(router?.params?.imagePath){
+      getTempFile(router?.params?.imagePath, (data) => {
+        setCurrentUserPhoto(router?.params?.imagePath || '');
+        setUserInfo("data:image/png;base64," + data);
+      });
+    }
+  })
+
+
 
   return (
     <View className='wrapper'>

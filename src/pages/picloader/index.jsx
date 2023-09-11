@@ -1,24 +1,21 @@
 import {
   View,
-  Text,
   Image,
   ScrollView,
-  Loading,
   Button,
 } from "@tarojs/components";
-import Taro, { useLoad, useReachBottom } from "@tarojs/taro";
-import { useEffect, useState } from "react";
+import Taro, { useLoad } from "@tarojs/taro";
+import { useState } from "react";
 import CustomNavigator from "@/components/CustomNavigator";
-import Disk from "@/images/disk.png";
-import Star from '@/images/icon-star-stroke.svg'
-import { saveImage } from "@/libs/common";
+import OperateImage from "@/components/OperateImage";
+import {ImageDomain} from '@/configs/index';
+
 import "./index.scss";
 
 // 默认拉取的次数
 const parallelCount = 8;
 const timeOut = 30000;
-const targetURL = "https://ziming.online/dd-photo-img";
-export default function Picloader(opts) {
+export default function Picloader() {
   const [title, setTitle] = useState("");
   const [showLoading, setShowLoading] = useState(false);
   // 原始的库
@@ -29,6 +26,8 @@ export default function Picloader(opts) {
 
   // 当前选中的图片
   const [currentImage, setCurrentImage] = useState('')
+
+  const [activeIndex, setActiveIndex] = useState()
 
   useLoad(() => {
     const pages = Taro.getCurrentPages();
@@ -49,7 +48,7 @@ export default function Picloader(opts) {
       (item) =>
         new Promise((resolve, reject) =>
           Taro.downloadFile({
-            url: targetURL + item,
+            url: ImageDomain + item,
             timeout: timeOut,
             success(res) {
               resolve(res?.tempFilePath);
@@ -67,59 +66,6 @@ export default function Picloader(opts) {
     });
   };
 
-  const OperateImage = ({imageSrc}) => {
-    console.log(imageSrc);
-    if(!imageSrc){
-      return
-    }
-    return (
-      <View className='image-container'>
-        <View className='popup' onClick={(e)=>{
-        e.stopPropagation()
-        setCurrentImage('')
-      }}></View>
-        <View className='image-box'>
-        <Image src={imageSrc}></Image>
-        <View
-          className='create-img'
-          onClick={() => {
-            // 可以通过 Taro.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
-            Taro.getSetting({
-              success: function (res1) {
-                if (!res1.authSetting["scope.writePhotosAlbum"]) {
-                  Taro.authorize({
-                    scope: "scope.writePhotosAlbum",
-                    success: function () {
-                      saveImage(imageSrc);
-                    },
-                  });
-                } else {
-                  saveImage(imageSrc);
-                }
-              },
-              fail: function (err) {
-                console.log(err);
-              },
-            });
-          }}
-        >
-          <Image src={Disk} /> 保存至相册
-        </View>
-        <View className='footer'>
-          <Button onClick={()=>{
-            Taro.navigateTo({
-              url: '/pages/photo/index'
-            })
-          }}
-          >去添加挂件</Button>
-          <Button><Image src={Star}></Image></Button>
-        </View>
-        </View>
-
-      </View>
-    );
-  };
-
   return (
     <View className='wrapper'>
       <CustomNavigator title={title} showBackBtn />
@@ -127,7 +73,7 @@ export default function Picloader(opts) {
         className='components-warper'
         scrollY
         scrollWithAnimation
-        onScrollToLower={(e) => {
+        onScrollToLower={() => {
           // 加载的时候，禁止出发事件
           if (showLoading) {
             return false;
@@ -152,6 +98,7 @@ export default function Picloader(opts) {
           cachedImg.map((item, index) => (
             <Image key={index} src={item} fadeIn onClick={() => {
               setCurrentImage(item)
+              setActiveIndex(index)
             }}
             ></Image>
           ))}
@@ -161,7 +108,9 @@ export default function Picloader(opts) {
         {showReachBottom && <View className='reach-bottom'>已经到底了哦</View>}
       </ScrollView>
 
-      <OperateImage imageSrc={currentImage} />
+      <OperateImage imageSrc={currentImage} originSrc={photoList[activeIndex]} onCancel={()=>{
+        setCurrentImage('')
+      }}/>
     </View>
   );
 }
