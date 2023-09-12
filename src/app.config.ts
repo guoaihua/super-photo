@@ -1,12 +1,13 @@
 export default {
   pages: [
+    "pages/index/index",
     "pages/personal/index",
     "pages/collect/index",
-    "pages/index/index",
     "pages/piclib/index",
     "pages/photo/index",
     "pages/page101/index",
-    "pages/picloader/index"
+    "pages/picloader/index",
+    "pages/about/index"
   ],
   window: {
     backgroundTextStyle: "light",
