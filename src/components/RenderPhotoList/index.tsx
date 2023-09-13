@@ -3,12 +3,10 @@ import {
   Text,
   Image,
   ScrollView,
-  Loading,
   Button,
-  A
 } from "@tarojs/components";
 import { LocalStorageKey, ImageDomain } from '@/configs/index';
-import Taro, { useLoad, useReachBottom } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
 import { saveImage } from "@/libs/common"
 import Disk from "@/images/disk.png";
 import Star from '@/images/icon-star-stroke.svg';
@@ -148,14 +146,15 @@ const RenderPhotoList = (props) => {
     <View className='scroll-wrapper'>
       {
         cachedImg.length === rmListIndex.length && isCollect && <Text style={{
-          display: 'inline-block',
-          width: "100%",
-          textAlign: 'center'
+          position: 'absolute',
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)"
         }} onClick={() => {
           // Taro.navigateTo({
           //   url: '/pages/piclib/index',
           // })
-        }}>没有收藏的图片哦，前往头像库添加</Text>
+        }}>暂无收藏</Text>
       }
       <ScrollView
         className='components-warper'

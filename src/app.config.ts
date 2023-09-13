@@ -7,7 +7,8 @@ export default {
     "pages/photo/index",
     "pages/page101/index",
     "pages/picloader/index",
-    "pages/about/index"
+    "pages/about/index",
+    "pages/activity/index"
   ],
   window: {
     backgroundTextStyle: "light",

@@ -1,6 +1,7 @@
 import { View, Image, Swiper, SwiperItem } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import CustomNavigator from "@/components/CustomNavigator/index";
+import banner from "@/images/activity/banner_nd.png";
 import "./index.scss";
 import photo from "./imgs/photo.png";
 import photo_top from "./imgs/photo_top.png";
@@ -8,7 +9,6 @@ import photo_bottom from "./imgs/photo_bottom.png";
 // import photo_top_2 from './imgs/photo_top_2.png'
 // import photo_bottom_2 from './imgs/photo_bottom_2.png'
 // import ball from './imgs/icon-crystalBall.svg'
-import banner from "./imgs/banner_nd.png";
 import star from "../../images/icon-shootingStar.svg";
 
 const activityList = [

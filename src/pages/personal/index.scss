@@ -5,7 +5,7 @@
 
   .components-warper {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     padding: 0 12.5px;
     width: calc(100% - 25px);
@@ -20,32 +20,48 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
 
       image {
         width: 30px;
         height: 30px;
+        margin-right: 5px;
       }
     }
 
     .personal-info {
       width: 360px;
-      height: 271px;
       border-radius: 10px;
       background-color: white;
-      margin-top: 20px;
+      margin-top: 15px;
+      padding: 0 20px;
+      box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
+      
+      >view:nth-child(1){
+        border-bottom: 1px solid #ccc;
+      }
+
       >view {
-        height: 33.3%;
-        width: calc(100% - 40px);
+        width: 100%;
+        padding: 20px 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px dotted #ccc;
+       
         font-size: 14px;
         font-weight: 500;
-        margin: 0 20px;
+        color: #1C1D20;
         image {
           width: 18px;
           height: 18px;
+        }
+      }
+      .dd-tips {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        image {
+          margin-right: 4px;
         }
       }
     }
