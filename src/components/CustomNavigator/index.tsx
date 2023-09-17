@@ -8,15 +8,18 @@ import {
     Swiper,
     SwiperItem,
 } from "@tarojs/components";
-import Taro from "@tarojs/taro";
+import Taro, {useLoad} from "@tarojs/taro";
 import './index.scss';
 import backBtn from './imgs/icon-back.png'
+import { useRef, useState } from "react";
 
 const CustomNavigator = (props) => {
     const title = props?.title
     const showBackBtn = props?.showBackBtn
   const customHeader = props?.customHeader
   const taroGlobalData = Taro.getApp().$app.taroGlobalData
+  const [showPrivacy, setShowPrivacy] = useState(true)
+  const privacyRef = useRef()
 
   const renderTitle = () => {
     return !showBackBtn ? (title ?? '头像工具') : (
@@ -29,6 +32,7 @@ const CustomNavigator = (props) => {
     )
   }
 
+
   return (
     <View className='custom-navigator' style={{
       height: taroGlobalData.navBarHeight,
@@ -39,6 +43,7 @@ const CustomNavigator = (props) => {
     >
       {renderTitle()}
     </View>
+    
     )
 }
 export default CustomNavigator

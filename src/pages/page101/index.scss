@@ -47,6 +47,8 @@ page,
       overflow: hidden;
       background-image: url('../../images/select-btn-bg.png');
       background-size: 16px 16px;
+      border: $border;
+      box-shadow: $box-shadow;
       >view {
         text-align: center;
       }
@@ -67,6 +69,7 @@ page,
       .local-album{
         background-color: black;
         color: white;
+        margin-bottom: 10px;
         .recommend {
           display: inline-block;
           background-color: #FFFFFF40;
@@ -128,13 +131,14 @@ page,
       .scroll-item {
         width: 100px;
         height: 100px;
-        margin-right: 20px;
+        margin-right: 15px;
         overflow: hidden;
         border-radius: 10px;
         display: inline-block;
         cursor: pointer;
         background-image: url('../../images/select-btn-bg.png');
         background-size: 16px 16px;
+        border: 1PX solid rgba(0, 0, 0, 0.1019607843)
       }
     }
 

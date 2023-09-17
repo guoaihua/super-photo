@@ -21,6 +21,7 @@ export default function Collect() {
 
   return (
     <View className='wrapper'>
+      <privacy-popup></privacy-popup>
       <CustomNavigator title='收藏夹' showBackBtn />
       <RenderPhotoList photoList={photoList} isCollect />
     </View>

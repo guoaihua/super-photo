@@ -25,6 +25,7 @@ export default function Picloader() {
 
   return (
     <View className='wrapper'>
+      <privacy-popup></privacy-popup>
       <CustomNavigator title={title} showBackBtn />
       <RenderPhotoList photoList={photoList} />
     </View>

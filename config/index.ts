@@ -71,6 +71,9 @@ const config = {
     "@/hooks": path.resolve(__dirname, "..", "src/hooks"),
     "@/configs": path.resolve(__dirname, "..", "src/configs")
   },
+  sass: {
+    resource: [path.resolve(__dirname, "..", "src/styles/index.global.scss")]
+  }
 };
 
 module.exports = function (merge) {

@@ -49,7 +49,8 @@ export const makeImage = ({
 }) => {
   if (!bgImg || !coverImg) {
     return Taro.showToast({
-      title: "请先设置图片",
+      title: "请先设置图像",
+      icon: 'error',
     });
   }
 
@@ -87,7 +88,7 @@ export const saveImage = (tempFilePath) => {
     success: function (res2) {
       console.log(res2);
       Taro.showToast({
-        title: "头像保存成功",
+        title: "已保存",
       });
     },
   });

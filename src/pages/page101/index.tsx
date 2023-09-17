@@ -7,7 +7,7 @@ import {
   Canvas,
   ScrollView,
 } from "@tarojs/components";
-import Taro from "@tarojs/taro";
+import Taro, {useShareAppMessage, useShareTimeline} from "@tarojs/taro";
 import CustomNavigator from "@/components/CustomNavigator";
 import {
   makeImage,
@@ -29,11 +29,29 @@ import nd_10_4 from "@/images/101/sticker_nd_04.png";
 import nd_10_5 from "@/images/101/sticker_nd_05.png";
 import nd_10_6 from "@/images/101/sticker_nd_06.png";
 import nd_10_7 from "@/images/101/sticker_nd_07.png";
+
+
+import sticker_china_01 from "@/images/china/sticker_china_01.png";
+import sticker_china_02 from "@/images/china/sticker_china_02.png";
+import sticker_china_03 from "@/images/china/sticker_china_03.png";
+import sticker_china_04 from "@/images/china/sticker_china_04.png";
+import sticker_china_05 from "@/images/china/sticker_china_05.png";
+import sticker_china_06 from "@/images/china/sticker_china_06.png";
+import sticker_china_07 from "@/images/china/sticker_china_07.png";
+import sticker_china_08 from "@/images/china/sticker_china_08.png";
+import sticker_china_09 from "@/images/china/sticker_china_09.png";
+import sticker_china_10 from "@/images/china/sticker_china_10.png";
+import sticker_china_11 from "@/images/china/sticker_china_11.png";
+import sticker_china_12 from "@/images/china/sticker_china_12.png";
+import sticker_china_13 from "@/images/china/sticker_china_13.png";
+import sticker_china_14 from "@/images/china/sticker_china_14.png";
+import sticker_china_15 from "@/images/china/sticker_china_15.png";
+
 import morePhoto from "./imgs/selector-mask.png";
 import Disk from "@/images/disk.png";
 import shareSvg from "@/images/icon-share.svg";
 import titleImg from "@/images/101/title_nd.png";
-
+import shareLargePng from '@/images/share_large.png'
 import "./index.scss";
 
 const themes = [
@@ -44,6 +62,21 @@ const themes = [
   nd_10_5,
   nd_10_6,
   nd_10_7,
+  sticker_china_01,
+  sticker_china_02,
+  sticker_china_03,
+  sticker_china_04,
+  sticker_china_05,
+  sticker_china_06,
+  sticker_china_07,
+  sticker_china_08,
+  sticker_china_09,
+  sticker_china_10,
+  sticker_china_11,
+  sticker_china_12,
+  sticker_china_13,
+  sticker_china_14,
+  sticker_china_15,
   morePhoto,
 ];
 const canvasId = "canvas";
@@ -57,8 +90,26 @@ const Index = () => {
 
   const canvasInfo = useCansvasInfo(userInfo);
 
+  const handleShare = (res) => {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '欢度国庆，给头像换新颖',
+      path: '/pages/page101/index',
+      imageUrl: shareLargePng
+    }
+  }
+
+  useShareAppMessage(handleShare)
+
+  useShareTimeline(handleShare)
+
+
   return (
     <View className='wrapper'>
+      <privacy-popup></privacy-popup>
       <CustomNavigator showBackBtn customHeader={logo} />
       <View className='photo-top'>
         {/* 头像显示区域 */}
@@ -235,9 +286,9 @@ const Index = () => {
           >
             <Image src={Disk} /> 保存至相册
           </View>
-          <View className='share'>
+          <Button open-type='share'  className='share' >
             <Image src={shareSvg} />
-          </View>
+          </Button>
         </View>
       </View>
       <Preview

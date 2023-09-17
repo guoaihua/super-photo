@@ -12,12 +12,13 @@ import Disk from "@/images/disk.png";
 import Star from '@/images/icon-star-stroke.svg';
 import StarActive from "@/images/icon-star-filled.svg"
 import { useEffect, useState } from "react";
+import placeHolderPng from '@/images/place-holder.png'
 
 import './index.scss'
 
 const OperateImage = ({ imageSrc, originSrc, onCancel, onLocalListChange }) => {
   const [localImgList, setLocalImgList] = useState([])
-  console.log("localImgList",localImgList);
+  console.log("localImgList", localImgList);
 
   useEffect(() => {
     const tempImgList = Taro.getStorageSync(LocalStorageKey)
@@ -27,7 +28,7 @@ const OperateImage = ({ imageSrc, originSrc, onCancel, onLocalListChange }) => {
   }, [])
 
   const toggleLocalImage = () => {
-    const index = Taro.getStorageSync(LocalStorageKey).findIndex((item) => item === originSrc)
+    const index = (Taro.getStorageSync(LocalStorageKey) || [])?.findIndex((item) => item === originSrc)
     if (index > -1) {
       localImgList.splice(index, 1)
     } else {
@@ -53,6 +54,21 @@ const OperateImage = ({ imageSrc, originSrc, onCancel, onLocalListChange }) => {
         <View
           className='create-img'
           onClick={() => {
+
+
+            // 先下载网络文件，再进行保存
+            const resolveImage = () => {
+              Taro.downloadFile({
+                url: imageSrc,
+                timeout: timeOut,
+                success(res) {
+                  saveImage(res?.tempFilePath);
+                },
+                fail(res) {
+                  console.log(res)
+                },
+              })
+            }
             // 可以通过 Taro.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
             Taro.getSetting({
               success: function (res1) {
@@ -60,11 +76,11 @@ const OperateImage = ({ imageSrc, originSrc, onCancel, onLocalListChange }) => {
                   Taro.authorize({
                     scope: "scope.writePhotosAlbum",
                     success: function () {
-                      saveImage(imageSrc);
+                      resolveImage()
                     },
                   });
                 } else {
-                  saveImage(imageSrc);
+                  resolveImage()
                 }
               },
               fail: function (err) {
@@ -118,26 +134,27 @@ const RenderPhotoList = (props) => {
 
 
   const pullImage = (list) => {
-    setShowLoading(true);
-    const imageRequestQueue = list?.map(
-      (item) =>
-        new Promise((resolve, reject) =>
-          Taro.downloadFile({
-            url: ImageDomain + item,
-            timeout: timeOut,
-            success(res) {
-              resolve(res?.tempFilePath);
-            },
-            fail(res) {
-              reject(res);
-            },
-          })
-        )
-    );
-    Promise.all(imageRequestQueue).then((data) => {
-      setCacheImg(cachedImg.concat(data));
-      setShowLoading(false);
-    });
+    // setShowLoading(true);
+    // const imageRequestQueue = list?.map(
+    //   (item) =>
+    //     new Promise((resolve, reject) =>
+    //       Taro.downloadFile({
+    //         url: ImageDomain + item,
+    //         timeout: timeOut,
+    //         success(res) {
+    //           resolve(res?.tempFilePath);
+    //         },
+    //         fail(res) {
+    //           reject(res);
+    //         },
+    //       })
+    //     )
+    // );
+    // Promise.all(imageRequestQueue).then((data) => {
+    //   setCacheImg(cachedImg.concat(data));
+    //   setShowLoading(false);
+    // });
+    setCacheImg(cachedImg.concat(list));
   };
 
   console.log("rmListIndex", rmListIndex)
@@ -182,16 +199,17 @@ const RenderPhotoList = (props) => {
       >
         {cachedImg?.length > 0 &&
           cachedImg.map((item, index) => {
-            
-         return  (
-            <Image style={{
-              display: !rmListIndex.includes(index) ? 'inline-block' : 'none'
-            }} key={index} src={item} fadeIn onClick={() => {
-              setCurrentImage(item)
-              setActiveIndex(index)
-            }}
-            ></Image>
-          )
+            return (
+              <Image style={{
+                display: !rmListIndex.includes(index) ? 'inline-block' : 'none'
+              }} key={index} src={ImageDomain + item} lazyload fadeIn={false} defaultSource={placeHolderPng} onClick={() => {
+                setCurrentImage(ImageDomain + item)
+                setActiveIndex(index)
+              }} onLoad={(e) => {
+                console.log(e)
+              }}
+              ></Image>
+            )
           }
           )}
         {showLoading && (
@@ -203,7 +221,7 @@ const RenderPhotoList = (props) => {
       <OperateImage imageSrc={currentImage} originSrc={photoList[activeIndex]} onCancel={() => {
         setCurrentImage('')
       }} onLocalListChange={isCollect ? (imageSrc) => {
-        const index = cachedImg.findIndex(item=> item === imageSrc)
+        const index = cachedImg.findIndex(item => imageSrc.includes(item))
         setRmListIndex([...rmListIndex.concat(index)])
         setCurrentImage('')
       } : null} />

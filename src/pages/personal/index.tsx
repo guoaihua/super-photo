@@ -1,4 +1,4 @@
-import { View, Image } from "@tarojs/components";
+import { View, Image,Button} from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import CustomNavigator from "@/components/CustomNavigator";
 import collectIcon from "@/images/icon-folder.svg"
@@ -36,7 +36,7 @@ const Index = () => {
               url: '/pages/about/index'
             })
           }}>关于<Image src={ArrowRightIcon}></Image></View>
-          {/* <View>建议&反馈<Image src={ArrowRightIcon}></Image></View> */}
+          <Button  className='feedback' openType="feedback">建议&反馈 <Image src={ArrowRightIcon}></Image></Button>
           <View onClick={()=>{
             Taro.navigateToMiniProgram({
               appId: 'wxcda8f0f389481b34',

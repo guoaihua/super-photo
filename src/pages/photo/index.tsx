@@ -232,6 +232,7 @@ const Index = (props) => {
 
   return (
     <View className='wrapper'>
+      <privacy-popup></privacy-popup>
       <CustomNavigator showBackBtn title='头像挂件' />
       <View className='photo-top'>
         {/* 头像显示区域 */}
@@ -376,7 +377,8 @@ const Index = (props) => {
               onClick={() => {
                 if (!currentUserPhoto) {
                   return Taro.showToast({
-                    title: "请先选择头像",
+                    title: "请先设置图像",
+                    icon: 'error',
                   });
                 }
 
@@ -436,9 +438,9 @@ const Index = (props) => {
           >
             <Image src={Disk} /> 保存至相册
           </View>
-          <View className='share'>
+          <Button open-type='share' className='share'>
             <Image src={shareSvg} />
-          </View>
+          </Button>
         </View>
       </View>
       <Preview

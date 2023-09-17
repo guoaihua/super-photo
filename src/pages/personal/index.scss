@@ -41,7 +41,7 @@
         border-bottom: 1px solid #ccc;
       }
 
-      >view {
+      >view, .feedback  {
         width: 100%;
         padding: 20px 0;
         display: flex;
@@ -63,6 +63,17 @@
         image {
           margin-right: 4px;
         }
+      }
+
+      .feedback {
+          background: white;
+          border: none;
+          font-size: 14px;
+          font-weight: 500;
+          border-bottom: 1px solid #ccc;
+      }
+      .feedback:after{
+        display: none
       }
     }
   }

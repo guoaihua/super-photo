@@ -40,4 +40,8 @@ export default {
       },
     ],
   },
+  __usePrivacyCheck__: true,
+  usingComponents: {
+    "privacy-popup": "./components/privacyPopup/privacyPopup"
+  }
 };
