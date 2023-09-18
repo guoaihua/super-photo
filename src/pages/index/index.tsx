@@ -1,7 +1,8 @@
 import { View, Image, Swiper, SwiperItem } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import CustomNavigator from "@/components/CustomNavigator/index";
-import banner from "@/images/activity/banner_nd.png";
+import nd_banner from "@/images/activity/banner_nd.png";
+import panda_banner from '@/images/activity/banner_panda.png'
 import "./index.scss";
 import photo from "./imgs/photo.png";
 import photo_top from "./imgs/photo_top.png";
@@ -14,8 +15,12 @@ import star from "../../images/icon-shootingStar.svg";
 const activityList = [
   {
     url: "../page101/index",
-    bannerImage: banner,
+    bannerImage: nd_banner,
   },
+  // {
+  //   url: "../page101/index",
+  //   bannerImage: panda_banner,
+  // },
 ];
 
 const Index = () => {
@@ -30,6 +35,8 @@ const Index = () => {
             circular
             indicatorDots={activityList?.length > 1}
             autoplay
+            activeClass='active-swiper-item'
+            // nextMargin='50px'
           >
             {activityList.map((item, index) => (
               <SwiperItem key={index}>

@@ -40,11 +40,11 @@ const OperateImage = ({ imageSrc, originSrc, onCancel, onLocalListChange }) => {
   }
 
 
-  if (!imageSrc) {
-    return null
-  }
+
   return (
-    <View className='image-container'>
+    <View className='image-container' style={{
+      display: imageSrc ? 'flex' : 'none'
+    }}>
       <View className='popup' onClick={(e) => {
         e.stopPropagation()
         onCancel()

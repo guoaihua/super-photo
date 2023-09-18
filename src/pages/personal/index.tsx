@@ -36,7 +36,7 @@ const Index = () => {
               url: '/pages/about/index'
             })
           }}>关于<Image src={ArrowRightIcon}></Image></View>
-          <Button  className='feedback' openType="feedback">建议&反馈 <Image src={ArrowRightIcon}></Image></Button>
+          {/* <Button  className='feedback' openType="feedback">建议&反馈 <Image src={ArrowRightIcon}></Image></Button> */}
           <View onClick={()=>{
             Taro.navigateToMiniProgram({
               appId: 'wxcda8f0f389481b34',

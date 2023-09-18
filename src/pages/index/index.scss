@@ -30,6 +30,10 @@
           border: $border;
         }
       }
+
+      .active-swiper-item {
+        zoom: 1.2;
+      }
     }
 
     .components-card {

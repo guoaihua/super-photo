@@ -234,7 +234,8 @@ const Index = () => {
 
                 if (!currentUserPhoto) {
                   return Taro.showToast({
-                    title: "请先选择头像",
+                    title: "请先设置图像",
+                    icon: 'error'
                   });
                 }
 
@@ -254,6 +255,7 @@ const Index = () => {
               if (!currentUserPhoto || !themes[activePic]) {
                 return Taro.showToast({
                   title: "请先设置图片",
+                  icon: 'error'
                 });
               }
               makeImage({

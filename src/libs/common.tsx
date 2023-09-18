@@ -1,4 +1,5 @@
 import Taro from "@tarojs/taro";
+import selectedIcon from '@/images/icon-selected.png'
 
 export const makeGarden = (ctx, x, y, r = 30) => {
   ctx.moveTo(r, 0);
@@ -89,6 +90,7 @@ export const saveImage = (tempFilePath) => {
       console.log(res2);
       Taro.showToast({
         title: "已保存",
+        image: selectedIcon,
       });
     },
   });

@@ -1,21 +1,21 @@
 
 import {
-    View,
-    Text,
-    Button,
-    Image,
-    Canvas,
-    Swiper,
-    SwiperItem,
+  View,
+  Text,
+  Button,
+  Image,
+  Canvas,
+  Swiper,
+  SwiperItem,
 } from "@tarojs/components";
-import Taro, {useLoad} from "@tarojs/taro";
+import Taro, { useLoad } from "@tarojs/taro";
 import './index.scss';
 import backBtn from './imgs/icon-back.png'
 import { useRef, useState } from "react";
 
 const CustomNavigator = (props) => {
-    const title = props?.title
-    const showBackBtn = props?.showBackBtn
+  const title = props?.title
+  const showBackBtn = props?.showBackBtn
   const customHeader = props?.customHeader
   const taroGlobalData = Taro.getApp().$app.taroGlobalData
   const [showPrivacy, setShowPrivacy] = useState(true)
@@ -24,7 +24,17 @@ const CustomNavigator = (props) => {
   const renderTitle = () => {
     return !showBackBtn ? (title ?? '头像工具') : (
       <View style={{ display: 'flex', alignItems: 'center' }}>
-        <Image src={customHeader || backBtn} className={customHeader ? 'custom-header' : ''} style={customHeader ? '' : { width: "24px", height: "24px", marginLeft: '15px', position: 'absolute' }} onClick={() => { Taro.navigateBack() }} />
+        <Image src={customHeader || backBtn} className={customHeader ? 'custom-header' : ''} style={customHeader ? '' : { width: "24px", height: "24px", marginLeft: '15px', position: 'absolute' }} onClick={() => {
+          // 兼容下分享过来的页面
+          Taro.navigateBack({
+            fail() {
+              // 失败的场景说明为分享过去的页面，此时自动切换到主页
+              Taro.switchTab({
+               url: '/pages/index/index'
+              })
+            }
+          })
+        }} />
         <View className='other' style={{ textAlign: 'center', width: '100%' }}>
           <Text>{title}</Text>
         </View>
@@ -43,7 +53,7 @@ const CustomNavigator = (props) => {
     >
       {renderTitle()}
     </View>
-    
-    )
+
+  )
 }
 export default CustomNavigator

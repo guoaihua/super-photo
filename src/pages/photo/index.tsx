@@ -103,6 +103,7 @@ import sticker_animal_18 from "@/images/animal/sticker_animal_18.png";
 import sticker_animal_19 from "@/images/animal/sticker_animal_19.png";
 
 import defaultImage from "./imgs/default.png";
+
 import "./index.scss";
 
 const themes = [
@@ -221,10 +222,19 @@ const Index = (props) => {
   useLoad(()=>{
     // 头像库跳转赋予默认值
     if(router?.params?.imagePath){
-      getTempFile(router?.params?.imagePath, (data) => {
-        setCurrentUserPhoto(router?.params?.imagePath || '');
-        setUserInfo("data:image/png;base64," + data);
-      });
+      Taro.downloadFile({
+        url:router?.params?.imagePath,
+        success(res) {
+          getTempFile(res?.tempFilePath, (data) => {
+            setCurrentUserPhoto(res?.tempFilePath || '');
+            setUserInfo("data:image/png;base64," + data);
+          });
+        },
+        fail(res) {
+          console.log(res)
+        },
+      })
+
     }
   })
 
@@ -406,6 +416,7 @@ const Index = (props) => {
               ) {
                 return Taro.showToast({
                   title: "请先设置图片",
+                  icon: 'error',
                 });
               }
               makeImage({
