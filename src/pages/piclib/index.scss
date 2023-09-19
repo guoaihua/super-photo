@@ -1,7 +1,6 @@
 .wrapper {
   width: 100%;
   height: 100%;
-  overflow-y: auto;
   .components-warper {
     display: flex;
     justify-content: start;
@@ -33,7 +32,9 @@
       display: flex;
       flex-wrap: wrap;
       width: 100%;
+      height: 100%;
       justify-content: space-around;
+      overflow-y: auto;
       
       >view {
         margin-bottom: 10px;
@@ -47,6 +48,7 @@
         flex-direction: column;
         justify-content: space-between;
         box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
+
         .title {
           font-size: 14px;
         }

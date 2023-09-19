@@ -110,7 +110,7 @@ const Index = () => {
   return (
     <View className='wrapper'>
       <privacy-popup></privacy-popup>
-      <CustomNavigator showBackBtn customHeader={logo} />
+      <CustomNavigator showBackBtn title='叮咚头像生成器' customHeader />
       <View className='photo-top'>
         {/* 头像显示区域 */}
         <View className='title'>
@@ -226,7 +226,6 @@ const Index = () => {
                 marginLeft: index === 0 ? "20px" : 0,
               }}
               onClick={() => {
-                console.log(themes.length - 1, index);
                 // 最后一项，跳转到头像挂件
                 if (index === themes.length - 1) {
                   return Taro.navigateTo({ url: "../photo/index" });

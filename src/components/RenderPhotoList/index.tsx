@@ -18,7 +18,6 @@ import './index.scss'
 
 const OperateImage = ({ imageSrc, originSrc, onCancel, onLocalListChange }) => {
   const [localImgList, setLocalImgList] = useState([])
-  console.log("localImgList", localImgList);
 
   useEffect(() => {
     const tempImgList = Taro.getStorageSync(LocalStorageKey)
@@ -157,7 +156,6 @@ const RenderPhotoList = (props) => {
     setCacheImg(cachedImg.concat(list));
   };
 
-  console.log("rmListIndex", rmListIndex)
 
   return (
     <View className='scroll-wrapper'>
@@ -205,8 +203,6 @@ const RenderPhotoList = (props) => {
               }} key={index} src={ImageDomain + item} lazyload fadeIn={false} defaultSource={placeHolderPng} onClick={() => {
                 setCurrentImage(ImageDomain + item)
                 setActiveIndex(index)
-              }} onLoad={(e) => {
-                console.log(e)
               }}
               ></Image>
             )

@@ -10,7 +10,6 @@ export const useCansvasInfo = (userInfo) => {
       Taro.createSelectorQuery()
         .select("#canvas")
         .boundingClientRect(function (rect) {
-          console.log(rect);
           setCanvasInfo(rect as any);
         })
         .exec();

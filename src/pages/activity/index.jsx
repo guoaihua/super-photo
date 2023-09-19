@@ -1,14 +1,11 @@
 import { View,Image } from '@tarojs/components'
-import Taro, { useLoad } from '@tarojs/taro'
+import Taro from '@tarojs/taro'
 import CustomNavigator from "@/components/CustomNavigator";
 import s101Png from '@/images/activity/banner_nd.png'
 import './index.scss'
 
 export default function Activity() {
 
-  useLoad(() => {
-    console.log('Page loaded.')
-  })
 
   return (
     <View className='wrapper'>

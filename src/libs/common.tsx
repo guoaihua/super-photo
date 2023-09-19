@@ -86,8 +86,7 @@ export const saveImage = (tempFilePath) => {
   // 用户已经同意小程序使用录音功能，后续调用 Taro.startRecord 接口不会弹窗询问
   Taro.saveImageToPhotosAlbum({
     filePath: tempFilePath,
-    success: function (res2) {
-      console.log(res2);
+    success: function () {
       Taro.showToast({
         title: "已保存",
         image: selectedIcon,

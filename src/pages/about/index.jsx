@@ -1,14 +1,11 @@
 import { View, Text, Image } from '@tarojs/components'
-import { useLoad } from '@tarojs/taro'
 import CustomNavigator from "@/components/CustomNavigator";
 import logoIcon from '@/images/logo.svg'
 import './index.scss'
 
 export default function About() {
 
-  useLoad(() => {
-    console.log('Page loaded.')
-  })
+
 
   return (
     <View className='wrapper'>

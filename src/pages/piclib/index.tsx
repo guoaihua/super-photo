@@ -80,7 +80,6 @@ const Index = () => {
     Taro.request({
       url: 'https://ziming.online/ddphoto/getPics',
       success: ({ data }) => {
-        console.log(data)
         setThemesMap(data?.themesMap)
       }
     })

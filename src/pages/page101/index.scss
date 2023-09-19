@@ -39,15 +39,12 @@ page,
       width: 300px;
       height: 300px;
       border-radius: 30px;
-      border: 1.5px;
-      background-color: white;
       display: flex;
       justify-content: space-around;
       flex-direction: column;
       overflow: hidden;
       background-image: url('../../images/select-btn-bg.png');
       background-size: 16px 16px;
-      border: $border;
       box-shadow: $box-shadow;
       >view {
         text-align: center;
@@ -138,7 +135,6 @@ page,
         cursor: pointer;
         background-image: url('../../images/select-btn-bg.png');
         background-size: 16px 16px;
-        // border: 1PX solid rgba(0, 0, 0, 0.1019607843)
       }
     }
 
