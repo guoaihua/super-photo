@@ -1,7 +1,7 @@
 import {
   View,
 } from "@tarojs/components";
-import Taro, { useLoad } from "@tarojs/taro";
+import Taro, { useLoad, useShareAppMessage, useShareTimeline} from "@tarojs/taro";
 import { useState } from "react";
 import CustomNavigator from "@/components/CustomNavigator";
 import RenderPhotoList from "@/components/RenderPhotoList";
@@ -22,6 +22,16 @@ export default function Picloader() {
       setPhotoList(res?.data);
     });
   });
+
+  const handleShare = () => {
+    return {
+      title: '给头像换新颖',
+      path: "/pages/picloader/index",
+      imageUrl: "https://zm-1253465948.cos.ap-nanjing.myqcloud.com/static/photo/share_common.png"
+    }
+  }
+  useShareAppMessage(handleShare)
+  useShareTimeline(handleShare)
 
   return (
     <View className='wrapper'>

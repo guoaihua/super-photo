@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import selectedIcon from '@/images/icon-selected.png'
+// import selectedIcon from '@/images/icon-selected1.png'
 
 export const makeGarden = (ctx, x, y, r = 30) => {
   ctx.moveTo(r, 0);
@@ -52,6 +52,7 @@ export const makeImage = ({
     return Taro.showToast({
       title: "请先设置图像",
       icon: 'error',
+      duration: 100000
     });
   }
 
@@ -89,7 +90,7 @@ export const saveImage = (tempFilePath) => {
     success: function () {
       Taro.showToast({
         title: "已保存",
-        image: selectedIcon,
+        // image: selectedIcon,
       });
     },
   });

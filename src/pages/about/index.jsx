@@ -1,6 +1,7 @@
 import { View, Text, Image } from '@tarojs/components'
 import CustomNavigator from "@/components/CustomNavigator";
 import logoIcon from '@/images/logo.svg'
+import logTextPng from '@/images/logo_text.png'
 import './index.scss'
 
 export default function About() {
@@ -11,6 +12,7 @@ export default function About() {
     <View className='wrapper'>
       <CustomNavigator title='关于' showBackBtn />
       <View className='components-warper'>
+        <Image  src={logTextPng}/>
         <Text >
           不知道有和我一样喜欢经常换头像的人吗？为了方便更换微信头像，我们开发了这个小程序。
         </Text>

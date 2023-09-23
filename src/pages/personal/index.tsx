@@ -1,5 +1,5 @@
 import { View, Image,Button} from "@tarojs/components";
-import Taro from "@tarojs/taro";
+import Taro,{useShareAppMessage, useShareTimeline} from "@tarojs/taro";
 import CustomNavigator from "@/components/CustomNavigator";
 import collectIcon from "@/images/icon-folder.svg"
 import pizzaIcon from '@/images/icon-pizza.svg'
@@ -9,6 +9,16 @@ import linkOpenPng from '@/images/icon-linkOpen.svg'
 import "./index.scss";
 
 const Index = () => {
+
+  const handleShare = () => {
+    return {
+      title: '给头像换新颖',
+      path: "/pages/personal/index",
+      imageUrl: "https://zm-1253465948.cos.ap-nanjing.myqcloud.com/static/photo/share_common.png"
+    }
+  }
+  useShareAppMessage(handleShare)
+  useShareTimeline(handleShare)
 
   return (
     <View className='wrapper'>

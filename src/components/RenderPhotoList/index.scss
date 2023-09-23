@@ -90,7 +90,7 @@
   .components-warper {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     padding: 0 12.5px;
     width: calc(100% - 25px);
@@ -98,12 +98,14 @@
     height: 80%;
 
     image {
-      width: 175px;
-      height: 175px;
+      width: 172px;
+      height: 172px;
       border-radius: 10px;
       margin-bottom: 10px;
+      // &:last-child:nth-child(2n-1) {
+      //   margin-right: auto;
+      // }
     }
-
     .reach-bottom {
       color: #a9abaf;
       text-align: center;

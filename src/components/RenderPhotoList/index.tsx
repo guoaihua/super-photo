@@ -123,6 +123,9 @@ const RenderPhotoList = (props) => {
 
   // 待删除的缓存index,取消勾选不会直接删除缓存图片，而是做隐藏
   const [rmListIndex, setRmListIndex] = useState<number[]>([])
+  
+  // 加载中的图片做一下记录,提供一个占位符，加载结束后显示完整图片
+  const [loadingList, setLoadingList] = useState([])
 
   useEffect(() => {
     // 无任何缓存数据时m,先拉取一次数据
@@ -153,6 +156,7 @@ const RenderPhotoList = (props) => {
     //   setCacheImg(cachedImg.concat(data));
     //   setShowLoading(false);
     // });
+    setLoadingList(loadingList.concat(list))
     setCacheImg(cachedImg.concat(list));
   };
 
@@ -181,7 +185,7 @@ const RenderPhotoList = (props) => {
             return false;
           }
           console.log("到达底部，开始加载中");
-          const currentIndex = cachedImg.length - 1;
+          const currentIndex = cachedImg.length;
           const targetList = photoList.slice(
             currentIndex,
             currentIndex + parallelCount
@@ -197,15 +201,26 @@ const RenderPhotoList = (props) => {
       >
         {cachedImg?.length > 0 &&
           cachedImg.map((item, index) => {
-            return (
+            return  (
+              <View key={index}>
+               {
+                loadingList[index] !== 'loaded' && (
+                  <Image src={placeHolderPng}></Image>
+                )
+               }
               <Image style={{
-                display: !rmListIndex.includes(index) ? 'inline-block' : 'none'
-              }} key={index} src={ImageDomain + item} lazyload fadeIn={false} defaultSource={placeHolderPng} onClick={() => {
+                display: (!rmListIndex.includes(index) && loadingList[index] === 'loaded') ? 'inline-block' : 'none',
+                marginRight: (cachedImg.length % 2 > 0 && index === cachedImg.length - 1 && !isCollect ) ? '172px' : '' // 单数列的最后一个元素特殊处理
+              }} onLoad={()=>{
+                loadingList.splice(index, 1, 'loaded')
+                setLoadingList([...loadingList])
+              }}  src={ImageDomain + item}  onClick={() => {
                 setCurrentImage(ImageDomain + item)
                 setActiveIndex(index)
               }}
-              ></Image>
-            )
+              />
+              </View>
+              )
           }
           )}
         {showLoading && (

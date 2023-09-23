@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Taro from "@tarojs/taro";
+import Taro, { useShareAppMessage, useShareTimeline } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import infoSvg from '@/images/icon-info.svg';
 import CustomNavigator from "@/components/CustomNavigator";
@@ -14,6 +14,8 @@ import maturePng from '@/images/cover/cover-mature.png';
 import pandaPng from "@/images/cover/cover-panda.png";
 import qqPng from "@/images/cover/cover-qq.png";
 import y2kPng from "@/images/cover/cover-y2k.png";
+import hungryPng from "@/images/cover/cover-hungry.png";
+
 
 import dogsPng from './imgs/dogs.png'
 import './index.scss'
@@ -24,10 +26,10 @@ const themesTitleMap = {
     title: '修狗狗',
     img: dogPng
   },
-  dogs: {
-    title: '线性小狗',
-    img: lineDogPng
-  },
+  // dogs: {
+  //   title: '线性小狗',
+  //   img: lineDogPng
+  // },
   cat: {
     title: '猫猫头',
     img: catPng
@@ -42,11 +44,11 @@ const themesTitleMap = {
   },
   lineDog: {
     title: '线条小狗',
-    img: lineDogPng
+    img: dogsPng
   },
   hungry: {
     title: '好饿啊',
-    img: lineDogPng
+    img: hungryPng
   },
   crazy: {
     title: '人哪有不疯的',
@@ -77,13 +79,29 @@ const themesTitleMap = {
 const Index = () => {
   const [themesMap, setThemesMap] = useState({})
   useEffect(() => {
+    console.log('开始发送请求')
     Taro.request({
       url: 'https://ziming.online/ddphoto/getPics',
       success: ({ data }) => {
         setThemesMap(data?.themesMap)
-      }
+      },
+      fail(err1){
+        console.log(err1)
+      },
+
     })
   }, [])
+
+
+  const handleShare = () => {
+    return {
+      title: '给头像换新颖',
+      path: "/pages/piclib/index",
+      imageUrl: "https://zm-1253465948.cos.ap-nanjing.myqcloud.com/static/photo/share_common.png"
+    }
+  }
+  useShareAppMessage(handleShare)
+  useShareTimeline(handleShare)
 
   return (
     <View className='wrapper'>
@@ -96,17 +114,21 @@ const Index = () => {
           {
             Object.keys(themesMap)?.map((theme, index) => {
               return (
-                <View key={index} onClick={() => {
-                  Taro.navigateTo({
-                    url: '/pages/picloader/index?title=12313',
-                    success(res) {
-                      res.eventChannel.emit('sendPicLibInfo', {
-                        title: themesTitleMap[theme]?.title || theme,
-                        data: themesMap[theme]
-                      })
-                    }
-                  })
-                }}
+                <View key={index}
+                  style={{
+                    marginRight: (Object.keys(themesMap)?.length % 2 > 0 && index === Object.keys(themesMap)?.length - 1) ? '178px' : '' // 单数列的最后一个元素特殊处理
+                  }}
+                  onClick={() => {
+                    Taro.navigateTo({
+                      url: '/pages/picloader/index?title=12313',
+                      success(res) {
+                        res.eventChannel.emit('sendPicLibInfo', {
+                          title: themesTitleMap[theme]?.title || theme,
+                          data: themesMap[theme]
+                        })
+                      }
+                    })
+                  }}
                 >
                   <View className='title'>{themesTitleMap[theme]?.title || theme}</View>
                   <Image src={themesTitleMap[theme]?.img}></Image>

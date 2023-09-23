@@ -7,9 +7,10 @@ import {
   Canvas,
   ScrollView,
 } from "@tarojs/components";
-import Taro, {useRouter, useLoad} from "@tarojs/taro";
+import Taro, { useRouter, useLoad, useShareAppMessage, useShareTimeline } from "@tarojs/taro";
 // import maskPng from "./cn_mask_1.png";
 // import maskPng2 from "./mask_china-02.png";
+
 import CustomNavigator from "@/components/CustomNavigator";
 import {
   makeImage,
@@ -27,12 +28,8 @@ import refreshSvg from "@/images/icon-refresh.svg";
 import shareSvg from "@/images/icon-share.svg";
 
 import nd_10_1 from "@/images/101/sticker_nd_01.png";
-import nd_10_2 from "@/images/101/sticker_nd_02.png";
-import nd_10_3 from "@/images/101/sticker_nd_03.png";
+
 import nd_10_4 from "@/images/101/sticker_nd_04.png";
-import nd_10_5 from "@/images/101/sticker_nd_05.png";
-import nd_10_6 from "@/images/101/sticker_nd_06.png";
-import nd_10_7 from "@/images/101/sticker_nd_07.png";
 
 import sticker_china_01 from "@/images/china/sticker_china_01.png";
 import sticker_china_02 from "@/images/china/sticker_china_02.png";
@@ -110,7 +107,6 @@ const themes = [
   {
     label: "热门",
     children: [
-      defaultImage,
       nd_10_1,
       sticker_panda_01,
       sticker_panda_02,
@@ -224,11 +220,21 @@ const Index = (props) => {
   const canvasInfo = useCansvasInfo(userInfo);
   const router = useRouter()
 
-  useLoad(()=>{
+  const handleShare = () => {
+    return {
+      title: '给头像换新颖',
+      path: "/pages/photo/index",
+      imageUrl: "https://zm-1253465948.cos.ap-nanjing.myqcloud.com/static/photo/share_common.png"
+    }
+  }
+  useShareAppMessage(handleShare)
+  useShareTimeline(handleShare)
+
+  useLoad(() => {
     // 头像库跳转赋予默认值
-    if(router?.params?.imagePath){
+    if (router?.params?.imagePath) {
       Taro.downloadFile({
-        url:router?.params?.imagePath,
+        url: router?.params?.imagePath,
         success(res) {
           getTempFile(res?.tempFilePath, (data) => {
             setCurrentUserPhoto(res?.tempFilePath || '');
@@ -306,7 +312,7 @@ const Index = (props) => {
         {/* 预览操作按钮 */}
         <View
           className={
-            currentUserPhoto && themes[activeTheme]?.children?.[activePic]
+            currentUserPhoto
               ? "preview"
               : "preview dd-disable"
           }
@@ -384,7 +390,7 @@ const Index = (props) => {
         >
           {themes[activeTheme]?.children.map((i, index) => (
             <View
-              className='scroll-item'
+              className={activePic === index ? 'scroll-item active' : 'scroll-item'}
               key={index}
               style={{
                 marginLeft: index === 0 ? "20px" : 0,
@@ -398,12 +404,7 @@ const Index = (props) => {
                 }
 
                 // 选择挂件蒙层
-                // 选中热门区第一个，恢复默认头像，清除其它选项
-                if (activeTheme === 0 && index === 0) {
-                  return setActivePic(-1);
-                }
-
-                activePic !== index && setActivePic(index);
+                setActivePic(activePic !== index ? index : -1);
               }}
             >
               <Image src={i} style={{ width: "100%", height: "100%" }} />

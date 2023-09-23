@@ -20,7 +20,7 @@ page,
 
   // 容器上层
   .photo-top {
-    margin-top: 15px;
+    margin: 15px 0 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,7 +45,20 @@ page,
       overflow: hidden;
       background-image: url('../../images/select-btn-bg.png');
       background-size: 16px 16px;
-      box-shadow: $box-shadow;
+      box-shadow: 0px 8px 20px 0px rgba(218, 0, 1, 0.20);
+      position: relative;
+      &::after {
+        left: 0;
+        right: 0;
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        box-shadow: inset 0.5PX 0.5PX 0PX 0.5PX #0000001A,
+        inset -0.5PX -0.5PX 0PX 0.5PX #0000001A;
+        border-radius: 30px;
+        pointer-events: none;
+      }
       >view {
         text-align: center;
       }
@@ -54,7 +67,7 @@ page,
         height: 50px;
         border-radius: 10px;
         color: white;
-        border: 1px;
+        border: $border;
         margin-bottom: 20px;
         line-height: 50px;
         text-align: center;
@@ -135,12 +148,45 @@ page,
         cursor: pointer;
         background-image: url('../../images/select-btn-bg.png');
         background-size: 16px 16px;
+        position: relative;
+        &::before {
+          left: 0;
+          right: 0;
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          box-shadow: inset 0.5PX 0.5PX 0PX 0.5PX #0000001A,
+          inset -0.5PX -0.5PX 0PX 0.5PX #0000001A;
+          border-radius: 10px;
+          pointer-events: none;
+        }
+      }
+      .active {
+        &::before {
+          background-color: rgba(0, 0, 0, 0.60);;
+        }
+
+        &::after{
+          left: 0;
+          right: 0;
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          pointer-events: none;
+          background-image: url('../../images/success.png');
+          background-repeat: no-repeat;
+          background-size: 24px 24px;
+          background-position: center center;
+        }
       }
     }
 
     .photo-operation {
       display: flex;
       align-items: center;
+      justify-content: space-evenly;
       margin-bottom: 10px;
       margin-top: 20px;
 
@@ -154,8 +200,8 @@ page,
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-left: 20px;
-        margin-right: 20px;
+        margin: 0;
+
 
         image {
           width: 20px;
@@ -173,6 +219,7 @@ page,
         display: flex;
         justify-content: center;
         align-items: center;
+        margin: 0;
 
         image {
           width: 24px;

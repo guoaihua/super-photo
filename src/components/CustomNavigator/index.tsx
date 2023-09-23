@@ -19,7 +19,6 @@ const CustomNavigator = (props) => {
   const customHeader = props?.customHeader
   const taroGlobalData = Taro.getApp().$app.taroGlobalData
 
-
   const renderTitle = () => {
     return !showBackBtn ? (title ?? '头像工具') : (
       <View style={{ display: 'flex', alignItems: 'center' }}>
@@ -34,13 +33,11 @@ const CustomNavigator = (props) => {
             }
           })
         }} />
-        <View className='other' style={{ textAlign: 'center', width: '100%' }}>
-          <Text>{title}</Text>
+        <View className='other' style={{ textAlign: 'center', width: '100%', marginLeft: '-8px'}}>{title}
         </View>
       </View>
     )
   }
-
 
   return (
     <View className={customHeader ? 'custom-header custom-navigator' : 'custom-navigator'} style={{

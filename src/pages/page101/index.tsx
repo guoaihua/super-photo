@@ -7,7 +7,7 @@ import {
   Canvas,
   ScrollView,
 } from "@tarojs/components";
-import Taro, {useShareAppMessage, useShareTimeline} from "@tarojs/taro";
+import Taro, { useShareAppMessage, useShareTimeline } from "@tarojs/taro";
 import CustomNavigator from "@/components/CustomNavigator";
 import {
   makeImage,
@@ -51,7 +51,6 @@ import morePhoto from "./imgs/selector-mask.png";
 import Disk from "@/images/disk.png";
 import shareSvg from "@/images/icon-share.svg";
 import titleImg from "@/images/101/title_nd.png";
-import shareLargePng from '@/images/share_large.png'
 import "./index.scss";
 
 const themes = [
@@ -98,7 +97,7 @@ const Index = () => {
     return {
       title: '欢度国庆，给头像换新颖',
       path: '/pages/page101/index',
-      imageUrl: shareLargePng
+      imageUrl: "https://zm-1253465948.cos.ap-nanjing.myqcloud.com/static/photo/share_101_large.png"
     }
   }
 
@@ -110,7 +109,7 @@ const Index = () => {
   return (
     <View className='wrapper'>
       <privacy-popup></privacy-popup>
-      <CustomNavigator showBackBtn title='叮咚头像生成器' customHeader />
+      <CustomNavigator showBackBtn title='给头像换新颖' customHeader />
       <View className='photo-top'>
         {/* 头像显示区域 */}
         <View className='title'>
@@ -171,7 +170,7 @@ const Index = () => {
         {/* 预览操作按钮 */}
         <View
           className={
-            currentUserPhoto && themes[activePic]
+            currentUserPhoto
               ? "preview"
               : "preview dd-disable"
           }
@@ -220,7 +219,7 @@ const Index = () => {
         >
           {themes.map((i, index) => (
             <View
-              className='scroll-item'
+              className={activePic === index ? 'scroll-item active' : 'scroll-item'}
               key={index}
               style={{
                 marginLeft: index === 0 ? "20px" : 0,
@@ -237,9 +236,8 @@ const Index = () => {
                     icon: 'error'
                   });
                 }
-
                 // 选择挂件蒙层
-                activePic !== index && setActivePic(index);
+                setActivePic(activePic !== index ? index : -1);
               }}
             >
               <Image src={i} style={{ width: "100%", height: "100%" }} />
@@ -287,7 +285,7 @@ const Index = () => {
           >
             <Image src={Disk} /> 保存至相册
           </View>
-          <Button open-type='share'  className='share' >
+          <Button open-type='share' className='share' >
             <Image src={shareSvg} />
           </Button>
         </View>

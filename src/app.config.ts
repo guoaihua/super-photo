@@ -16,7 +16,6 @@ export default {
     navigationStyle: "custom",
   },
   tabBar: {
-    customer: true,
     color: "#A9ABAF",
     selectedColor: "#FFA112",
     list: [

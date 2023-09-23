@@ -15,7 +15,7 @@ page,
 
   // 容器上层
   .photo-top {
-    padding-top: 20px;
+    padding: 20px 0 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -33,8 +33,20 @@ page,
       overflow: hidden;
       background-image: url('../../images/select-btn-bg.png');
       background-size: 16px 16px;
-      border: $border;
       box-shadow: 0px 8px 20px 0px rgba(211, 128, 0, 0.20);
+      position: relative;
+      &::after {
+        left: 0;
+        right: 0;
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        box-shadow: inset 0.5PX 0.5PX 0PX 0.5PX #0000001A,
+        inset -0.5PX -0.5PX 0PX 0.5PX #0000001A;
+        border-radius: 30px;
+        pointer-events: none;
+      }
       >view {
         text-align: center;
       }
@@ -43,7 +55,7 @@ page,
         height: 50px;
         border-radius: 10px;
         color: white;
-        border: 1px solid rgba(0, 0, 0, 0.10);
+        border: $border;
         margin-bottom: 20px;
         line-height: 50px;
         text-align: center;
@@ -123,7 +135,6 @@ page,
         text-decoration: underline;
         -ms-text-underline-position: 6px;
         text-underline-offset: 6px;
-        transition: ease-in-out 0.3s;
       }
 
       .scroll-item {
@@ -147,13 +158,47 @@ page,
         border-radius: 10px;
         display: inline-block;
         cursor: pointer;
-        border: 1px solid #0000001A;
+        background-image: url('../../images/select-btn-bg.png');
+        background-size: 16px 16px;
+        position: relative;
+        &::before {
+          left: 0;
+          right: 0;
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          box-shadow: inset 0.5PX 0.5PX 0PX 0.5PX #0000001A,
+          inset -0.5PX -0.5PX 0PX 0.5PX #0000001A;
+          border-radius: 10px;
+          pointer-events: none;
+        }
+      }
+      .active {
+        &::before {
+          background-color: rgba(0, 0, 0, 0.60);;
+        }
+
+        &::after{
+          left: 0;
+          right: 0;
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          pointer-events: none;
+          background-image: url('../../images/success.png');
+          background-repeat: no-repeat;
+          background-size: 24px 24px;
+          background-position: center center;
+        }
       }
     }
 
     .photo-operation {
       display: flex;
       align-items: center;
+      justify-content: space-evenly;
       margin-bottom: 10px;
       margin-top: 20px;
 
@@ -167,8 +212,7 @@ page,
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-left: 20px;
-        margin-right: 20px;
+        margin: 0;
 
         image {
           width: 20px;
@@ -186,6 +230,7 @@ page,
         display: flex;
         justify-content: center;
         align-items: center;
+        margin: 0;
 
         image {
           width: 24px;
