@@ -106,7 +106,7 @@ const OperateImage = ({ imageSrc, originSrc, onCancel, onLocalListChange }) => {
 };
 
 // 默认拉取的次数
-const parallelCount = 8;
+const parallelCount = 12;
 const timeOut = 30000;
 
 const RenderPhotoList = (props) => {

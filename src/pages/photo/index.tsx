@@ -46,6 +46,9 @@ import sticker_china_12 from "@/images/china/sticker_china_12.png";
 import sticker_china_13 from "@/images/china/sticker_china_13.png";
 import sticker_china_14 from "@/images/china/sticker_china_14.png";
 import sticker_china_15 from "@/images/china/sticker_china_15.png";
+import sticker_china_16 from "@/images/china/sticker_china_16.png";
+import sticker_china_17 from "@/images/china/sticker_china_17.png";
+import sticker_china_18 from "@/images/china/sticker_china_18.png";
 
 import sticker_panda_01 from "@/images/panda/sticker_panda_01.png";
 import sticker_panda_02 from "@/images/panda/sticker_panda_02.png";
@@ -107,7 +110,8 @@ const themes = [
   {
     label: "热门",
     children: [
-      nd_10_1,
+      sticker_china_01,
+      sticker_china_02,
       sticker_panda_01,
       sticker_panda_02,
       sticker_panda_03,
@@ -139,6 +143,9 @@ const themes = [
       sticker_china_13,
       sticker_china_14,
       sticker_china_15,
+      sticker_china_16,
+      sticker_china_17,
+      sticker_china_18,
     ],
   },
   {
@@ -218,6 +225,8 @@ const Index = (props) => {
   const [preViewImg, setPreViewImg] = useState("");
   const [showModal, setShowModal] = useState(false);
   const canvasInfo = useCansvasInfo(userInfo);
+  const [photoScrollLeft, setPhotoScrollLeft] = useState(0);
+
   const router = useRouter()
 
   const handleShare = () => {
@@ -373,6 +382,8 @@ const Index = (props) => {
                 if (index !== activeTheme) {
                   setActiveTheme(index);
                   setActivePic(-1);
+                  // 恢复挂件初始位置
+                  setPhotoScrollLeft(0)
                 }
               }}
             >
@@ -387,6 +398,11 @@ const Index = (props) => {
             whiteSpace: "nowrap",
           }}
           scrollIntoViewAlignment='nearest'
+          onScroll={(e)=>{
+            const left  = e.detail.scrollLeft
+            setPhotoScrollLeft(left)
+          }}
+          scrollLeft={photoScrollLeft}
         >
           {themes[activeTheme]?.children.map((i, index) => (
             <View

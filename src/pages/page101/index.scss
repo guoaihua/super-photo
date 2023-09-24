@@ -1,7 +1,7 @@
 page {
-  padding         : 14px;
-  box-sizing      : border-box;
-  color           : #333;
+  padding: 14px;
+  box-sizing: border-box;
+  color: #333;
   background-image: url('./imgs/bg_nd.png');
   background-size: 100%;
 }
@@ -29,6 +29,7 @@ page,
     .title {
       width: 240px;
       height: 113px;
+
       image {
         width: 100%;
         height: 100%;
@@ -47,6 +48,7 @@ page,
       background-size: 16px 16px;
       box-shadow: 0px 8px 20px 0px rgba(218, 0, 1, 0.20);
       position: relative;
+
       &::after {
         left: 0;
         right: 0;
@@ -55,31 +57,49 @@ page,
         top: 0;
         bottom: 0;
         box-shadow: inset 0.5PX 0.5PX 0PX 0.5PX #0000001A,
-        inset -0.5PX -0.5PX 0PX 0.5PX #0000001A;
+          inset -0.5PX -0.5PX 0PX 0.5PX #0000001A;
         border-radius: 30px;
         pointer-events: none;
       }
+
       >view {
         text-align: center;
       }
+
       .select-btn {
+        box-sizing: content-box;
         width: 200px;
         height: 50px;
         border-radius: 10px;
         color: white;
-        border: $border;
         margin-bottom: 20px;
         line-height: 50px;
+        padding: 0;
         text-align: center;
+        position: relative;
+        &::after {
+          left: 0;
+          right: 0;
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          box-shadow: inset 0.5PX 0.5PX 0PX 0.5PX #0000001A,
+            inset -0.5PX -0.5PX 0PX 0.5PX #0000001A;
+          border-radius: 10px;
+          pointer-events: none;
+        }
       }
+
       .avatar-wrapper {
         background-color: #57bf6b;
       }
 
-      .local-album{
+      .local-album {
         background-color: black;
         color: white;
         margin-bottom: 10px;
+
         .recommend {
           display: inline-block;
           background-color: #FFFFFF40;
@@ -96,6 +116,7 @@ page,
         width: 100%;
         height: 100%;
         overflow: hidden;
+
         #canvas {
           width: 300px !important;
           height: 300px !important;
@@ -109,10 +130,12 @@ page,
           color: white;
         }
       }
+
       text {
         font-size: 14px;
       }
     }
+
     .preview {
       display: flex;
       justify-content: space-between;
@@ -128,7 +151,8 @@ page,
         cursor: pointer;
         color: white;
       }
-      view > image {
+
+      view>image {
         width: 24px;
         height: 24px;
         vertical-align: middle;
@@ -136,6 +160,7 @@ page,
       }
     }
   }
+
   .photo-bottom {
     .photo-scrollview {
       .scroll-item {
@@ -149,6 +174,7 @@ page,
         background-image: url('../../images/select-btn-bg.png');
         background-size: 16px 16px;
         position: relative;
+
         &::before {
           left: 0;
           right: 0;
@@ -157,17 +183,19 @@ page,
           top: 0;
           bottom: 0;
           box-shadow: inset 0.5PX 0.5PX 0PX 0.5PX #0000001A,
-          inset -0.5PX -0.5PX 0PX 0.5PX #0000001A;
+            inset -0.5PX -0.5PX 0PX 0.5PX #0000001A;
           border-radius: 10px;
           pointer-events: none;
         }
       }
+
       .active {
         &::before {
-          background-color: rgba(0, 0, 0, 0.60);;
+          background-color: rgba(0, 0, 0, 0.60);
+          ;
         }
 
-        &::after{
+        &::after {
           left: 0;
           right: 0;
           content: '';
@@ -201,6 +229,19 @@ page,
         align-items: center;
         justify-content: center;
         margin: 0;
+        position: relative;
+        &::after {
+          left: 0;
+          right: 0;
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          box-shadow: inset 0.5PX 0.5PX 0PX 0.5PX #0000001A,
+            inset -0.5PX -0.5PX 0PX 0.5PX #0000001A;
+          border-radius: 10px;
+          pointer-events: none;
+        }
 
 
         image {
@@ -220,6 +261,19 @@ page,
         justify-content: center;
         align-items: center;
         margin: 0;
+        position: relative;
+        &::after {
+          left: 0;
+          right: 0;
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          box-shadow: inset 0.5PX 0.5PX 0PX 0.5PX #0000001A,
+            inset -0.5PX -0.5PX 0PX 0.5PX #0000001A;
+          border-radius: 10px;
+          pointer-events: none;
+        }
 
         image {
           width: 24px;

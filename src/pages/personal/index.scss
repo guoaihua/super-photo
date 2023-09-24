@@ -46,11 +46,11 @@
       width: 360px;
       border-radius: 10px;
       background-color: white;
-      margin-top: 18px;
+      margin-top: 16px;
       padding: 0 20px;
       box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
       position: relative;
-      &::before {
+      &::after {
         left: 0;
         right: 0;
         content: '';
