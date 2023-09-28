@@ -123,7 +123,7 @@ const RenderPhotoList = (props) => {
 
   // 待删除的缓存index,取消勾选不会直接删除缓存图片，而是做隐藏
   const [rmListIndex, setRmListIndex] = useState<number[]>([])
-  
+
   // 加载中的图片做一下记录,提供一个占位符，加载结束后显示完整图片
   const [loadingList, setLoadingList] = useState([])
 
@@ -132,8 +132,6 @@ const RenderPhotoList = (props) => {
     if (cachedImg?.length > 0) return
     pullImage(photoList.slice(0, parallelCount));
   }, [photoList])
-
-
 
   const pullImage = (list) => {
     // setShowLoading(true);
@@ -201,26 +199,36 @@ const RenderPhotoList = (props) => {
       >
         {cachedImg?.length > 0 &&
           cachedImg.map((item, index) => {
-            return  (
+            let lastItem = ''
+            if (isCollect) {
+              const displayList = [...cachedImg]
+              const sortIndexList = rmListIndex.sort()
+              for (var i = sortIndexList.length - 1; i >= 0; i--) {
+                displayList.splice(sortIndexList[i], 1)
+              }
+              lastItem = displayList?.pop()
+            }
+
+            return (
               <View key={index}>
-               {
-                loadingList[index] !== 'loaded' && (
-                  <Image src={placeHolderPng}></Image>
-                )
-               }
-              <Image style={{
-                display: (!rmListIndex.includes(index) && loadingList[index] === 'loaded') ? 'inline-block' : 'none',
-                marginRight: (cachedImg.length % 2 > 0 && index === cachedImg.length - 1 && !isCollect ) ? '172px' : '' // 单数列的最后一个元素特殊处理
-              }} onLoad={()=>{
-                loadingList.splice(index, 1, 'loaded')
-                setLoadingList([...loadingList])
-              }}  src={ImageDomain + item}  onClick={() => {
-                setCurrentImage(ImageDomain + item)
-                setActiveIndex(index)
-              }}
-              />
+                {
+                  loadingList[index] !== 'loaded' && (
+                    <Image src={placeHolderPng}></Image>
+                  )
+                }
+                <Image style={{
+                  display: (!rmListIndex.includes(index) && loadingList[index] === 'loaded') ? 'inline-block' : 'none',
+                  marginRight: ((cachedImg.length % 2 > 0 && index === cachedImg.length - 1 && !isCollect) || ((cachedImg.length - rmListIndex.length) % 2 > 0 && isCollect && item === lastItem)) ? (isCollect ? '177px' : '172px') : undefined // 单数列的最后一个元素特殊处理
+                }} onLoad={() => {
+                  loadingList.splice(index, 1, 'loaded')
+                  setLoadingList([...loadingList])
+                }} src={ImageDomain + item} onClick={() => {
+                  setCurrentImage(ImageDomain + item)
+                  setActiveIndex(index)
+                }}
+                />
               </View>
-              )
+            )
           }
           )}
         {showLoading && (

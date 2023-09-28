@@ -69,27 +69,20 @@ const Index = () => {
         {/* 卡片 */}
         <View
           className='components-card'
+          onClick={() => {
+            Taro.navigateTo({
+              url: "/pages/photo/index",
+            });
+          }}
         >
-          <View className='item-left'
-            onClick={() => {
-              Taro.navigateTo({
-                url: "/pages/photo/index",
-              });
-            }}
-          >
+          <View className='item-left'>
             <Image src={photo} />
             <View className='tips'>
               <Image src={star}></Image>
               头像挂件
             </View>
           </View>
-          <View className='item-right'
-            onClick={() => {
-              Taro.switchTab({
-                url: "/pages/piclib/index",
-              });
-            }}
-          >
+          <View className='item-right'>
             <Image className='list-item-top' src={photo_top} />
             <Image className='list-item-bottom' src={photo_bottom} />
           </View>
@@ -113,6 +106,28 @@ const Index = () => {
             <Image className='list-item-bottom' src={photo_bottom_2} />
           </View>
         </View> */}
+        {/* <View onClick={()=>{
+             Taro.login({
+              success: function (res) {
+                if (res.code) {
+                  console.log(res)
+                  //发起网络请求
+                  Taro.request({
+                    method: 'GET',
+                    url: 'http://192.168.50.128:9000/login',
+                    data: {
+                      code: res.code
+                    },
+                    success({data}){
+                      Taro.setStorageSync('login_info', data)
+                    }
+                  })
+                } else {
+                  console.log('登录失败！' + res.errMsg)
+                }
+              }
+             })
+        }}>登录</View> */}
       </View>
     </View>
   );

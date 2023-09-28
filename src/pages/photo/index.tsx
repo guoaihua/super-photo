@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -274,6 +274,7 @@ const Index = (props) => {
                 open-type='chooseAvatar'
                 onChooseAvatar={(e) => {
                   const { avatarUrl } = e.detail;
+
                   getTempFile(avatarUrl, (data) => {
                     setCurrentUserPhoto(avatarUrl);
                     setUserInfo("data:image/png;base64," + data);
@@ -383,7 +384,13 @@ const Index = (props) => {
                   setActiveTheme(index);
                   setActivePic(-1);
                   // 恢复挂件初始位置
-                  setPhotoScrollLeft(0)
+                  Taro.createSelectorQuery()
+                    .select('.photo-scrollview')
+                    .node()
+                    .exec((res) => {
+                      // 设置挂件恢复到第一个
+                      res[0]?.node?.scrollTo({ left: 0 })
+                    })
                 }
               }}
             >
@@ -398,11 +405,12 @@ const Index = (props) => {
             whiteSpace: "nowrap",
           }}
           scrollIntoViewAlignment='nearest'
-          onScroll={(e)=>{
-            const left  = e.detail.scrollLeft
-            setPhotoScrollLeft(left)
-          }}
-          scrollLeft={photoScrollLeft}
+          // onScroll={(e)=>{
+          //   const left  = e.detail.scrollLeft
+          //   setPhotoScrollLeft(left)
+          // }}
+          // scrollLeft={photoScrollLeft}
+          enhanced
         >
           {themes[activeTheme]?.children.map((i, index) => (
             <View
@@ -432,15 +440,21 @@ const Index = (props) => {
           <View
             className='create-img'
             onClick={() => {
-              if (
-                !currentUserPhoto ||
-                !themes[activeTheme]?.children?.[activePic]
-              ) {
+              if (!currentUserPhoto) {
                 return Taro.showToast({
-                  title: "请先设置图片",
+                  title: "请先设置图像",
                   icon: 'error',
                 });
               }
+
+              if (!themes[activeTheme]?.children?.[activePic]) {
+                return Taro.showToast({
+                  title: "请先设置挂件",
+                  icon: 'error',
+                });
+              }
+
+
               makeImage({
                 canvasInfo,
                 canvasId,

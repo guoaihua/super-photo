@@ -48,11 +48,17 @@ export const makeImage = ({
   cb,
   showGarden = false,
 }) => {
-  if (!bgImg || !coverImg) {
+  if (!bgImg) {
     return Taro.showToast({
       title: "请先设置图像",
       icon: 'error',
-      duration: 100000
+    });
+  }
+
+  if (!coverImg) {
+    return Taro.showToast({
+      title: "请先设置挂件",
+      icon: 'error',
     });
   }
 
@@ -99,20 +105,68 @@ export const saveImage = (tempFilePath) => {
 /** 选择裁剪本地图像 */
 export const chooseLocalImage = (cb) => {
   Taro.chooseMedia({
-    count: 9,
+    count: 1,
     mediaType: ["image", "video"],
     sourceType: ["album", "camera"],
-    sizeType: ["original"],
+    sizeType: ["compressed"],
     maxDuration: 30,
     camera: "back",
     success(res) {
+
       Taro.cropImage({
         src: res.tempFiles[0].tempFilePath,
         cropScale: "1:1", // 裁剪比例
         success(resolveData) {
-          getTempFile(resolveData?.tempFilePath, (data) => {
-            cb(resolveData?.tempFilePath, data);
-          });
+          console.log(resolveData)
+          // 判断裁剪之后的大小
+          const fs = Taro.getFileSystemManager()
+          fs.getFileInfo({
+            filePath: resolveData?.tempFilePath,
+            success(res1) {
+              console.log(res1)
+              if (res1?.size > 1024 * 1024 * 1) {
+                return Taro.showToast({
+                  title: '图像不能超过1M',
+                  icon: 'error'
+                })
+              } else {
+                getTempFile(resolveData?.tempFilePath, (data) => {
+                  // 效验图片是否合法
+                  Taro.showLoading({
+                    title: '图片安全检验中'
+                  })
+
+                  Taro.request({
+                    // url: 'http://192.168.50.128:9000/checkImg',
+                    url: 'https://ziming.online/ddphoto/checkImg',
+                    method: 'POST',
+                    data: {
+                      img: data,
+                    },
+                    success(result) {
+                      Taro.hideLoading()
+                      if (result?.data?.errcode !== 0) {
+                        return Taro.showToast({
+                          title: '图片不合法，请重新上传',
+                          icon: 'error'
+                        })
+                      } else {
+                        cb(resolveData?.tempFilePath, data);
+                      }
+                    },
+                    fail() {
+                      Taro.hideLoading()
+                      Taro.showToast({
+                        title: '未知错误，请优先使用微信头像',
+                        icon: 'error'
+                      })
+                    }
+                  }
+                  )
+                });
+              }
+            }
+          })
         },
       });
     },

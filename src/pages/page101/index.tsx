@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -109,7 +109,7 @@ const Index = () => {
   return (
     <View className='wrapper'>
       <privacy-popup></privacy-popup>
-      <CustomNavigator showBackBtn title='给头像换新颖' customHeader />
+      <CustomNavigator showBackBtn title='叮咚头像生成器' customHeader />
       <View className='photo-top'>
         {/* 头像显示区域 */}
         <View className='title'>
@@ -249,10 +249,16 @@ const Index = () => {
           <View
             className='create-img'
             onClick={() => {
-              if (!currentUserPhoto || !themes[activePic]) {
+              if (!currentUserPhoto) {
                 return Taro.showToast({
-                  title: "请先设置图片",
-                  icon: 'error'
+                  title: "请先设置图像",
+                  icon: 'error',
+                });
+              }
+              if(!themes[activePic]){
+                return Taro.showToast({
+                  title: "请先设置挂件",
+                  icon: 'error',
                 });
               }
               makeImage({
